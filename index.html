@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Lua Key Manager</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Lua Key Manager</h1>
+
+    <section class="card">
+      <label>Contraseña de administrador</label>
+      <input id="adminPassword" type="password" placeholder="Admin password">
+      <button id="generate">Generar key</button>
+      <p id="newKey" class="key"></p>
+      <p id="message"></p>
+    </section>
+
+    <section class="card">
+      <div class="row">
+        <h2>Keys</h2>
+        <button id="refresh">Actualizar</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Creada</th>
+            <th>Activada</th>
+            <th>Expira</th>
+            <th>Estado</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="keys"></tbody>
+      </table>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
