@@ -2,670 +2,509 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#050509">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808">
 <title>KYAMI MODZ | Key System</title>
 
 <style>
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-:root{
-  --red:#ff1744;
-  --red2:#ff003c;
-  --dark:#050509;
-  --card:rgba(13,13,20,.88);
-  --line:rgba(255,23,68,.25);
-  --white:#fff;
-  --gray:#92929d;
-  --green:#00e676;
-  --blue:#4da3ff;
-}
-
-html,body{
-  width:100%;
-  min-height:100%;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#050509;
-  color:white;
-  overflow-x:hidden;
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-  min-height:100vh;
+    min-height:100vh;
+    font-family:Arial,Helvetica,sans-serif;
+    color:#fff;
+    background:
+        radial-gradient(circle at 20% 10%,rgba(255,30,70,.20),transparent 28%),
+        radial-gradient(circle at 80% 80%,rgba(140,0,255,.16),transparent 30%),
+        linear-gradient(135deg,#050505,#0b0b0f 50%,#050505);
+    overflow-x:hidden;
 }
 
-/* =========================
-   FONDO ANIMADO
-========================= */
+/* FONDO ANIMADO */
 
 .background{
-  position:fixed;
-  inset:0;
-  overflow:hidden;
-  z-index:-5;
-  background:
-    radial-gradient(circle at 50% -10%,rgba(255,0,60,.25),transparent 35%),
-    radial-gradient(circle at 100% 100%,rgba(110,0,255,.12),transparent 35%),
-    #050509;
-}
-
-.grid{
-  position:absolute;
-  inset:-50%;
-  width:200%;
-  height:200%;
-  background-image:
-    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-  background-size:45px 45px;
-  transform:rotate(8deg);
-  animation:gridMove 18s linear infinite;
-}
-
-@keyframes gridMove{
-  from{transform:translateY(0) rotate(8deg)}
-  to{transform:translateY(45px) rotate(8deg)}
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:-1;
 }
 
 .orb{
-  position:absolute;
-  width:260px;
-  height:260px;
-  border-radius:50%;
-  filter:blur(80px);
-  opacity:.22;
-  animation:orbFloat 8s ease-in-out infinite;
+    position:absolute;
+    width:220px;
+    height:220px;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:.25;
+    animation:float 8s ease-in-out infinite;
 }
 
 .orb.one{
-  background:#ff003c;
-  left:-100px;
-  top:20%;
+    background:#ff1744;
+    left:-80px;
+    top:15%;
 }
 
 .orb.two{
-  background:#7000ff;
-  right:-100px;
-  bottom:5%;
-  animation-delay:2s;
+    background:#7c00ff;
+    right:-80px;
+    bottom:10%;
+    animation-delay:2s;
 }
 
-@keyframes orbFloat{
-  0%,100%{transform:translate(0,0)}
-  50%{transform:translate(40px,-35px)}
+.orb.three{
+    background:#ff0055;
+    left:45%;
+    top:55%;
+    width:140px;
+    height:140px;
+    animation-delay:4s;
 }
 
-#particles{
-  position:absolute;
-  inset:0;
+@keyframes float{
+    0%,100%{
+        transform:translate(0,0) scale(1);
+    }
+    50%{
+        transform:translate(30px,-35px) scale(1.15);
+    }
 }
 
-/* =========================
-   APP
-========================= */
+/* PARTICULAS */
 
-.app{
-  width:100%;
-  max-width:500px;
-  margin:auto;
-  padding:18px;
-  position:relative;
-  z-index:2;
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    background:#ff3355;
+    border-radius:50%;
+    opacity:.5;
+    animation:rise linear infinite;
 }
 
-/* =========================
-   HEADER
-========================= */
+@keyframes rise{
+    from{
+        transform:translateY(110vh);
+        opacity:0;
+    }
+    20%{
+        opacity:.7;
+    }
+    80%{
+        opacity:.5;
+    }
+    to{
+        transform:translateY(-20vh);
+        opacity:0;
+    }
+}
+
+/* CONTENEDOR */
+
+.container{
+    width:100%;
+    max-width:480px;
+    margin:auto;
+    padding:20px 15px 50px;
+}
+
+/* HEADER */
 
 .header{
-  height:64px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:18px;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.brand-logo{
-  width:42px;
-  height:42px;
-  border-radius:13px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(145deg,#ff1744,#8b001f);
-  font-weight:1000;
-  box-shadow:0 0 25px rgba(255,23,68,.4);
-}
-
-.brand-name{
-  font-weight:900;
-  letter-spacing:1px;
-}
-
-.brand-name span{
-  color:var(--red);
-}
-
-.status{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  padding:8px 11px;
-  border-radius:20px;
-  border:1px solid rgba(0,230,118,.2);
-  background:rgba(0,230,118,.05);
-  color:#a7ffc9;
-  font-size:10px;
-  font-weight:bold;
-}
-
-.status-dot{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 12px var(--green);
-  animation:statusPulse 1.5s infinite;
-}
-
-@keyframes statusPulse{
-  50%{opacity:.35;transform:scale(.65)}
-}
-
-/* =========================
-   PAGES
-========================= */
-
-.page{
-  display:none;
-  animation:pageIn .45s ease;
-}
-
-.page.active{
-  display:block;
-}
-
-@keyframes pageIn{
-  from{
-    opacity:0;
-    transform:translateY(18px) scale(.98);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
-}
-
-/* =========================
-   HERO
-========================= */
-
-.hero{
-  position:relative;
-  text-align:center;
-  padding:28px 18px 24px;
-  border-radius:28px;
-  border:1px solid var(--line);
-  background:linear-gradient(
-    145deg,
-    rgba(25,15,23,.95),
-    rgba(8,8,13,.92)
-  );
-  box-shadow:
-    0 20px 70px rgba(0,0,0,.45),
-    0 0 50px rgba(255,0,60,.08);
-  overflow:hidden;
-}
-
-.hero::before{
-  content:"";
-  position:absolute;
-  width:180px;
-  height:180px;
-  background:var(--red);
-  filter:blur(100px);
-  opacity:.12;
-  top:-100px;
-  left:50%;
-  transform:translateX(-50%);
+    text-align:center;
+    padding:25px 10px 15px;
+    animation:fadeDown .8s ease;
 }
 
 .logo{
-  width:92px;
-  height:92px;
-  margin:auto;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#08080c;
-  border:2px solid var(--red);
-  color:var(--red);
-  font-size:34px;
-  font-weight:1000;
-  box-shadow:
-    0 0 20px rgba(255,23,68,.35),
-    inset 0 0 20px rgba(255,23,68,.08);
-  animation:logoPulse 2.4s infinite;
+    width:88px;
+    height:88px;
+    margin:0 auto 15px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#ff1744,#85001f);
+    border:3px solid #ff4966;
+    box-shadow:
+        0 0 20px rgba(255,20,60,.7),
+        0 0 55px rgba(255,20,60,.25);
+    font-size:34px;
+    font-weight:900;
+    animation:pulse 2.5s infinite;
 }
 
-@keyframes logoPulse{
-  0%,100%{
-    transform:scale(1);
-    box-shadow:0 0 20px rgba(255,23,68,.3);
-  }
-  50%{
-    transform:scale(1.05);
-    box-shadow:0 0 45px rgba(255,23,68,.65);
-  }
+@keyframes pulse{
+    0%,100%{
+        box-shadow:0 0 20px rgba(255,20,60,.7);
+    }
+    50%{
+        box-shadow:0 0 35px rgba(255,20,60,1),
+                   0 0 70px rgba(255,20,60,.35);
+    }
 }
 
-.hero h1{
-  margin-top:18px;
-  font-size:30px;
-  font-weight:1000;
-  letter-spacing:2px;
+h1{
+    font-size:30px;
+    letter-spacing:2px;
+    font-weight:900;
 }
 
-.hero h1 span{
-  color:var(--red);
+.subtitle{
+    margin-top:8px;
+    color:#999;
+    font-size:13px;
 }
 
-.hero p{
-  margin-top:8px;
-  color:var(--gray);
-  font-size:12px;
+.status{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    margin-top:14px;
+    padding:8px 13px;
+    border-radius:30px;
+    background:rgba(0,255,120,.08);
+    border:1px solid rgba(0,255,120,.25);
+    color:#55ff9a;
+    font-size:12px;
+    font-weight:bold;
 }
 
-.lock{
-  width:82px;
-  height:30px;
-  margin:18px auto 0;
-  border-radius:30px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:5px;
-  background:rgba(255,23,68,.08);
-  border:1px solid rgba(255,23,68,.3);
-  color:#ff809b;
-  font-size:10px;
-  font-weight:bold;
+.status-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#36ff87;
+    box-shadow:0 0 10px #36ff87;
 }
 
-/* =========================
-   CARDS
-========================= */
+/* NAV */
+
+.nav{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin:20px 0;
+}
+
+.nav button{
+    border:1px solid #28282d;
+    background:#111116;
+    color:#aaa;
+    padding:13px;
+    border-radius:14px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.nav button.active,
+.nav button:hover{
+    color:#fff;
+    border-color:#ff3154;
+    background:rgba(255,30,70,.10);
+    box-shadow:0 0 20px rgba(255,30,70,.12);
+}
+
+/* CARDS */
+
+.page{
+    display:none;
+    animation:pageIn .45s ease;
+}
+
+.page.active{
+    display:block;
+}
 
 .card{
-  margin-top:14px;
-  padding:18px;
-  border-radius:20px;
-  background:var(--card);
-  border:1px solid rgba(255,255,255,.07);
-  box-shadow:0 15px 45px rgba(0,0,0,.25);
+    position:relative;
+    background:rgba(13,13,18,.88);
+    border:1px solid #292931;
+    border-radius:22px;
+    padding:22px;
+    margin-bottom:15px;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+    backdrop-filter:blur(12px);
+    overflow:hidden;
 }
 
-.card-title{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  font-size:14px;
-  font-weight:bold;
-  margin-bottom:14px;
+.card::before{
+    content:"";
+    position:absolute;
+    width:120px;
+    height:120px;
+    right:-60px;
+    top:-60px;
+    background:#ff1744;
+    opacity:.08;
+    filter:blur(20px);
+    border-radius:50%;
 }
 
-.card-title-icon{
-  width:30px;
-  height:30px;
-  border-radius:9px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(255,23,68,.1);
-  color:var(--red);
+.card h2{
+    font-size:19px;
+    margin-bottom:9px;
 }
 
-/* =========================
-   STATS
-========================= */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
+.card p{
+    color:#999;
+    line-height:1.6;
+    font-size:14px;
 }
 
-.stat{
-  text-align:center;
-  padding:13px 5px;
-  border-radius:13px;
-  background:#09090d;
-  border:1px solid rgba(255,255,255,.05);
+/* LOCKED */
+
+.lock-icon{
+    width:75px;
+    height:75px;
+    margin:5px auto 18px;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:35px;
+    background:rgba(255,30,70,.10);
+    border:1px solid rgba(255,30,70,.3);
+    animation:lockFloat 3s ease-in-out infinite;
 }
 
-.stat-number{
-  font-size:17px;
-  font-weight:900;
+@keyframes lockFloat{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-7px)}
 }
 
-.stat-label{
-  margin-top:4px;
-  color:#777;
-  font-size:8px;
-  text-transform:uppercase;
+.center{
+    text-align:center;
 }
 
-/* =========================
-   BUTTONS
-========================= */
-
-.main-btn{
-  width:100%;
-  min-height:55px;
-  border:0;
-  border-radius:15px;
-  margin-top:11px;
-  color:white;
-  font-weight:900;
-  cursor:pointer;
-  transition:.22s ease;
-  position:relative;
-  overflow:hidden;
+.info-list{
+    margin-top:18px;
+    display:grid;
+    gap:9px;
 }
 
-.main-btn::after{
-  content:"";
-  position:absolute;
-  width:60px;
-  height:100%;
-  top:0;
-  left:-100px;
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,255,255,.25),
-    transparent
-  );
-  transform:skewX(-20deg);
-  animation:shine 3.5s infinite;
+.info{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px;
+    border-radius:12px;
+    background:#101015;
+    border:1px solid #202027;
+    color:#bbb;
+    font-size:13px;
 }
 
-@keyframes shine{
-  0%{left:-100px}
-  25%,100%{left:130%}
+/* GENERATOR */
+
+.generator{
+    text-align:center;
 }
 
-.main-btn:hover{
-  transform:translateY(-2px);
-  filter:brightness(1.1);
+.key-box{
+    margin:20px 0;
+    padding:18px;
+    min-height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:15px;
+    background:#07070a;
+    border:1px dashed #3a3a44;
+    color:#777;
+    word-break:break-all;
+    font-family:monospace;
+    font-size:15px;
 }
 
-.main-btn:active{
-  transform:scale(.98);
+.key-box.ready{
+    color:#ff526f;
+    border-color:#ff3154;
+    box-shadow:0 0 25px rgba(255,30,70,.12);
 }
 
-.generate{
-  background:linear-gradient(135deg,#ff1744,#a50025);
-  box-shadow:0 10px 30px rgba(255,0,60,.2);
+.main-button{
+    width:100%;
+    border:0;
+    padding:16px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#ff1744,#b9002d);
+    color:white;
+    font-size:15px;
+    font-weight:900;
+    cursor:pointer;
+    box-shadow:0 10px 30px rgba(255,20,60,.25);
+    transition:.25s;
+}
+
+.main-button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 15px 35px rgba(255,20,60,.4);
+}
+
+.main-button:active{
+    transform:scale(.98);
+}
+
+.copy-button{
+    margin-top:10px;
+    width:100%;
+    padding:13px;
+    border-radius:14px;
+    border:1px solid #303039;
+    background:#121218;
+    color:#ddd;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.copy-button:hover{
+    border-color:#ff3154;
+}
+
+/* SOCIAL */
+
+.social{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+.social a{
+    text-decoration:none;
+    color:white;
+    padding:14px 8px;
+    text-align:center;
+    border-radius:13px;
+    font-weight:bold;
+    font-size:13px;
+    transition:.25s;
 }
 
 .whatsapp{
-  background:linear-gradient(135deg,#11c96a,#07833f);
+    background:#128c4a;
 }
 
 .youtube{
-  background:linear-gradient(135deg,#ff3030,#a90000);
+    background:#b00020;
 }
 
-.back{
-  background:#141419;
-  border:1px solid #292932;
+.social a:hover{
+    transform:translateY(-3px);
+    filter:brightness(1.15);
 }
 
-/* =========================
-   KEY PAGE
-========================= */
+/* FEATURES */
 
-.key-hero{
-  text-align:center;
-  padding:25px 18px;
-  border-radius:25px;
-  background:linear-gradient(145deg,#151017,#09090d);
-  border:1px solid var(--line);
+.features{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
 }
 
-.key-icon{
-  width:70px;
-  height:70px;
-  margin:auto;
-  border-radius:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  background:rgba(255,23,68,.08);
-  border:1px solid rgba(255,23,68,.3);
-  animation:keyFloat 2.5s ease-in-out infinite;
+.feature{
+    padding:15px;
+    border-radius:15px;
+    background:#101015;
+    border:1px solid #24242c;
 }
 
-@keyframes keyFloat{
-  50%{transform:translateY(-7px) rotate(2deg)}
+.feature-icon{
+    font-size:22px;
+    margin-bottom:8px;
 }
 
-.key-hero h2{
-  margin-top:14px;
-  font-size:23px;
+.feature strong{
+    display:block;
+    font-size:13px;
 }
 
-.key-hero p{
-  color:#85858e;
-  font-size:11px;
-  margin-top:7px;
+.feature span{
+    display:block;
+    color:#777;
+    font-size:11px;
+    margin-top:5px;
 }
 
-.input{
-  width:100%;
-  height:54px;
-  margin-top:10px;
-  border-radius:13px;
-  border:1px solid #292932;
-  outline:none;
-  background:#08080c;
-  color:white;
-  padding:0 15px;
-  font-size:13px;
+/* LOADING */
+
+.loading{
+    display:none;
+    margin:15px auto;
 }
 
-.input:focus{
-  border-color:var(--red);
-  box-shadow:0 0 20px rgba(255,23,68,.1);
+.loading.active{
+    display:block;
 }
 
-.result{
-  display:none;
-  margin-top:13px;
-  padding:14px;
-  border-radius:15px;
-  background:rgba(0,230,118,.045);
-  border:1px solid rgba(0,230,118,.3);
-}
-
-.result.show{
-  display:block;
-  animation:pageIn .35s ease;
-}
-
-.success{
-  color:#5dff9e;
-  font-size:11px;
-  font-weight:bold;
-  margin-bottom:9px;
-}
-
-.key-row{
-  display:flex;
-  gap:7px;
-}
-
-.key-value{
-  flex:1;
-  min-width:0;
-  padding:13px 10px;
-  border-radius:10px;
-  background:#050507;
-  border:1px solid #25252b;
-  color:white;
-  font-family:monospace;
-  font-size:11px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-
-.copy{
-  width:80px;
-  border:1px solid #33333a;
-  border-radius:10px;
-  background:#17171d;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.copy:hover{
-  border-color:var(--red);
-}
-
-/* =========================
-   ERROR
-========================= */
-
-.error{
-  display:none;
-  margin-top:11px;
-  padding:12px;
-  border-radius:11px;
-  background:rgba(255,23,68,.08);
-  border:1px solid rgba(255,23,68,.25);
-  color:#ff8298;
-  font-size:11px;
-  line-height:1.4;
-}
-
-.error.show{
-  display:block;
-}
-
-/* =========================
-   LOADING
-========================= */
-
-.spinner{
-  width:16px;
-  height:16px;
-  display:inline-block;
-  vertical-align:middle;
-  margin-right:7px;
-  border-radius:50%;
-  border:2px solid rgba(255,255,255,.25);
-  border-top-color:white;
-  animation:spin .7s linear infinite;
+.loader{
+    width:34px;
+    height:34px;
+    margin:auto;
+    border:3px solid #333;
+    border-top-color:#ff3154;
+    border-radius:50%;
+    animation:spin .7s linear infinite;
 }
 
 @keyframes spin{
-  to{transform:rotate(360deg)}
+    to{transform:rotate(360deg)}
 }
 
-/* =========================
-   INFO
-========================= */
+/* FOOTER */
 
-.info-row{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:12px 0;
-  border-bottom:1px solid rgba(255,255,255,.05);
+.footer{
+    text-align:center;
+    color:#555;
+    font-size:11px;
+    margin-top:25px;
 }
 
-.info-row:last-child{
-  border-bottom:0;
+/* ANIMACIONES */
+
+@keyframes fadeDown{
+    from{
+        opacity:0;
+        transform:translateY(-20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
-.info-icon{
-  width:35px;
-  height:35px;
-  border-radius:10px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#0c0c11;
-  font-size:15px;
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
-.info-text{
-  flex:1;
-}
+@media(max-width:360px){
+    h1{
+        font-size:25px;
+    }
 
-.info-text strong{
-  display:block;
-  font-size:11px;
-}
-
-.info-text span{
-  display:block;
-  color:#6e6e78;
-  font-size:9px;
-  margin-top:3px;
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer{
-  text-align:center;
-  padding:20px 0 8px;
-  color:#55555e;
-  font-size:9px;
-}
-
-footer strong{
-  color:#85858d;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:380px){
-  .app{
-    padding:12px;
-  }
-
-  .hero{
-    padding:22px 14px;
-  }
-
-  .hero h1{
-    font-size:26px;
-  }
-
-  .logo{
-    width:80px;
-    height:80px;
-  }
+    .container{
+        padding-left:10px;
+        padding-right:10px;
+    }
 }
 </style>
 </head>
@@ -673,520 +512,373 @@ footer strong{
 <body>
 
 <div class="background">
-  <div class="grid"></div>
-  <div class="orb one"></div>
-  <div class="orb two"></div>
-  <div id="particles"></div>
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+
+    <span class="particle" style="left:8%;animation-duration:8s"></span>
+    <span class="particle" style="left:18%;animation-duration:11s;animation-delay:2s"></span>
+    <span class="particle" style="left:32%;animation-duration:9s;animation-delay:1s"></span>
+    <span class="particle" style="left:47%;animation-duration:13s;animation-delay:4s"></span>
+    <span class="particle" style="left:63%;animation-duration:10s;animation-delay:2s"></span>
+    <span class="particle" style="left:78%;animation-duration:12s;animation-delay:5s"></span>
+    <span class="particle" style="left:91%;animation-duration:9s;animation-delay:3s"></span>
 </div>
 
-<div class="app">
+<div class="container">
 
-  <!-- HEADER -->
+    <header class="header">
 
-  <header class="header">
+        <div class="logo">K</div>
 
-    <div class="brand">
-      <div class="brand-logo">K</div>
+        <h1>KYAMI MODZ</h1>
 
-      <div class="brand-name">
-        KYAMI <span>MODZ</span>
-      </div>
-    </div>
+        <div class="subtitle">
+            LUA KEY SYSTEM
+        </div>
 
-    <div class="status">
-      <span class="status-dot"></span>
-      ONLINE
-    </div>
+        <div class="status">
+            <span class="status-dot"></span>
+            SISTEMA ONLINE
+        </div>
 
-  </header>
+    </header>
 
+    <!-- NAVEGACION -->
 
-  <!-- =========================
-       PÁGINA 1
-       BLOQUEADO
-  ========================== -->
+    <div class="nav">
 
-  <section id="blockedPage" class="page active">
+        <button id="lockedBtn"
+                class="active"
+                onclick="showPage('locked')">
+            🔒 Bloqueado
+        </button>
 
-    <div class="hero">
-
-      <div class="logo">
-        K
-      </div>
-
-      <h1>
-        KYAMI <span>MODZ</span>
-      </h1>
-
-      <p>
-        Sistema de acceso para scripts Lua
-      </p>
-
-      <div class="lock">
-        🔒 BLOQUEADO
-      </div>
+        <button id="generateBtn"
+                onclick="showPage('generate')">
+            🔑 Generar Key
+        </button>
 
     </div>
 
+    <!-- PAGINA BLOQUEADA -->
 
-    <div class="card">
+    <section id="locked" class="page active">
 
-      <div class="card-title">
-        <div class="card-title-icon">⚡</div>
-        Estado del sistema
-      </div>
+        <div class="card center">
 
-      <div class="stats">
+            <div class="lock-icon">
+                🔒
+            </div>
 
-        <div class="stat">
-          <div class="stat-number">24/7</div>
-          <div class="stat-label">Servidor</div>
+            <h2>Contenido protegido</h2>
+
+            <p>
+                Esta sección contiene información del sistema
+                y estado de tu key.
+            </p>
+
+            <div class="info-list">
+
+                <div class="info">
+                    🛡️ Sistema seguro
+                </div>
+
+                <div class="info">
+                    ⚡ Generación rápida
+                </div>
+
+                <div class="info">
+                    🔑 Key compatible con tu sistema
+                </div>
+
+                <div class="info">
+                    ♻️ Puedes generar una nueva key cuando sea necesario
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="stat">
-          <div class="stat-number">8H</div>
-          <div class="stat-label">Duración</div>
+        <div class="card">
+
+            <h2>¿Quieres continuar?</h2>
+
+            <p>
+                Puedes visitar mis redes sociales si quieres
+                apoyar el proyecto. No es obligatorio para generar
+                tu key.
+            </p>
+
+            <div class="social">
+
+                <a class="whatsapp"
+                   href="https://whatsapp.com/channel/0029Vb7HbHUJ93wRQ6TZSE0g"
+                   target="_blank">
+                    📱 WhatsApp
+                </a>
+
+                <a class="youtube"
+                   href="https://youtube.com/@kyami-modz90?si=XotEIvlfTQvGOSz1"
+                   target="_blank">
+                    ▶️ YouTube
+                </a>
+
+            </div>
+
         </div>
 
-        <div class="stat">
-          <div class="stat-number">✓</div>
-          <div class="stat-label">Seguro</div>
+        <div class="card">
+
+            <h2>Características</h2>
+
+            <div class="features">
+
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <strong>Rápido</strong>
+                    <span>Generación instantánea</span>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🔐</div>
+                    <strong>Seguro</strong>
+                    <span>Sistema protegido</span>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">📱</div>
+                    <strong>Mobile</strong>
+                    <span>Diseñado para celular</span>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">✨</div>
+                    <strong>Moderno</strong>
+                    <span>Interfaz animada</span>
+                </div>
+
+            </div>
+
         </div>
 
-      </div>
+    </section>
 
+    <!-- PAGINA GENERAR KEY -->
+
+    <section id="generate" class="page">
+
+        <div class="card generator">
+
+            <div class="lock-icon">
+                🔑
+            </div>
+
+            <h2>Generar nueva Key</h2>
+
+            <p>
+                Pulsa el botón para generar una key.
+                No necesitas unirte a ningún canal.
+            </p>
+
+            <div id="keyBox" class="key-box">
+                Tu key aparecerá aquí
+            </div>
+
+            <div id="loading" class="loading">
+                <div class="loader"></div>
+                <p style="margin-top:10px">
+                    Generando key...
+                </p>
+            </div>
+
+            <button class="main-button"
+                    onclick="generateKey()">
+                ⚡ GENERAR KEY
+            </button>
+
+            <button class="copy-button"
+                    onclick="copyKey()">
+                📋 COPIAR KEY
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Apoya el proyecto ❤️</h2>
+
+            <p>
+                Si quieres apoyar a KYAMI MODZ puedes visitar
+                el canal de WhatsApp o el canal de YouTube.
+                Es completamente opcional.
+            </p>
+
+            <div class="social">
+
+                <a class="whatsapp"
+                   href="https://whatsapp.com/channel/0029Vb7HbHUJ93wRQ6TZSE0g"
+                   target="_blank">
+                    📱 Unirme a WhatsApp
+                </a>
+
+                <a class="youtube"
+                   href="https://youtube.com/@kyami-modz90?si=XotEIvlfTQvGOSz1"
+                   target="_blank">
+                    ▶️ Ver YouTube
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Información</h2>
+
+            <div class="info-list">
+
+                <div class="info">
+                    ✅ No requiere suscripción
+                </div>
+
+                <div class="info">
+                    ✅ No requiere like
+                </div>
+
+                <div class="info">
+                    ✅ Generación directa
+                </div>
+
+                <div class="info">
+                    ✅ Botón para copiar
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="footer">
+        KYAMI MODZ © 2026 · LUA KEY SYSTEM
     </div>
-
-
-    <div class="card">
-
-      <div class="card-title">
-        <div class="card-title-icon">🔐</div>
-        Acceso requerido
-      </div>
-
-      <div class="info-row">
-
-        <div class="info-icon">🔑</div>
-
-        <div class="info-text">
-          <strong>Necesitas una Key</strong>
-          <span>Genera una key para continuar.</span>
-        </div>
-
-      </div>
-
-      <div class="info-row">
-
-        <div class="info-icon">⏱️</div>
-
-        <div class="info-text">
-          <strong>Tiempo limitado</strong>
-          <span>La duración depende del servidor.</span>
-        </div>
-
-      </div>
-
-      <button
-        class="main-btn generate"
-        onclick="showPage('keyPage')"
-      >
-        🔑 GENERAR MI KEY
-      </button>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="card-title">
-        <div class="card-title-icon">❤️</div>
-        Apoya a KYAMI MODZ
-      </div>
-
-      <a
-        class="main-btn whatsapp"
-        href="https://whatsapp.com/channel/0029Vb7HbHUJ93wRQ6TZSE0g"
-        target="_blank"
-        rel="noopener noreferrer"
-        style="display:flex;align-items:center;justify-content:center;text-decoration:none;"
-      >
-        🟢 UNIRME AL CANAL DE WHATSAPP
-      </a>
-
-      <a
-        class="main-btn youtube"
-        href="https://youtube.com/@kyami-modz90?si=XotEIvlfTQvGOSz1"
-        target="_blank"
-        rel="noopener noreferrer"
-        style="display:flex;align-items:center;justify-content:center;text-decoration:none;"
-      >
-        ▶️ VISITAR YOUTUBE
-      </a>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="card-title">
-        <div class="card-title-icon">ℹ️</div>
-        ¿Cómo funciona?
-      </div>
-
-      <div class="info-row">
-        <div class="info-icon">1️⃣</div>
-        <div class="info-text">
-          <strong>Genera tu Key</strong>
-          <span>Entra al generador y completa el acceso.</span>
-        </div>
-      </div>
-
-      <div class="info-row">
-        <div class="info-icon">2️⃣</div>
-        <div class="info-text">
-          <strong>Copia la Key</strong>
-          <span>Usa el botón COPIAR.</span>
-        </div>
-      </div>
-
-      <div class="info-row">
-        <div class="info-icon">3️⃣</div>
-        <div class="info-text">
-          <strong>Continúa en tu script</strong>
-          <span>Introduce la Key donde corresponda.</span>
-        </div>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- =========================
-       PÁGINA 2
-       GENERAR KEY
-  ========================== -->
-
-  <section id="keyPage" class="page">
-
-    <div class="key-hero">
-
-      <div class="key-icon">
-        🔑
-      </div>
-
-      <h2>
-        Generar Key
-      </h2>
-
-      <p>
-        Crea tu clave de acceso de forma segura.
-      </p>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="card-title">
-        <div class="card-title-icon">🔐</div>
-        Autenticación
-      </div>
-
-      <div class="info-row">
-
-        <div class="info-icon">🛡️</div>
-
-        <div class="info-text">
-          <strong>Acceso protegido</strong>
-          <span>La contraseña se procesa mediante el servidor.</span>
-        </div>
-
-      </div>
-
-      <input
-        id="password"
-        class="input"
-        type="password"
-        autocomplete="off"
-        placeholder="Contraseña de administrador"
-      >
-
-      <button
-        id="generateBtn"
-        class="main-btn generate"
-        onclick="generateKey()"
-      >
-        ⚡ GENERAR KEY
-      </button>
-
-      <button
-        class="main-btn back"
-        onclick="showPage('blockedPage')"
-      >
-        ← VOLVER
-      </button>
-
-
-      <div id="error" class="error"></div>
-
-
-      <div id="result" class="result">
-
-        <div class="success">
-          ✓ KEY GENERADA CORRECTAMENTE
-        </div>
-
-        <div class="key-row">
-
-          <div
-            id="keyValue"
-            class="key-value"
-          >
-            —
-          </div>
-
-          <button
-            id="copyBtn"
-            class="copy"
-            onclick="copyKey()"
-          >
-            COPIAR
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="card-title">
-        <div class="card-title-icon">💡</div>
-        Información
-      </div>
-
-      <div class="notice" style="color:#777;line-height:1.6;font-size:11px;">
-        🔒 No compartas tu Key con otras personas.<br><br>
-        ⏱️ La Key puede tener una duración limitada.<br><br>
-        🛡️ Nunca publiques tu contraseña de administrador.<br><br>
-        ⚙️ La generación depende de la configuración del servidor.
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <footer>
-    <strong>KYAMI MODZ</strong> · LUA KEY SYSTEM<br>
-    Sistema de acceso © 2026
-  </footer>
 
 </div>
-
 
 <script>
 
-/* =====================================
-   CAMBIO ENTRE PÁGINAS
-===================================== */
+/* CAMBIAR PAGINA */
 
-function showPage(pageId){
+function showPage(page){
 
-  document
-    .querySelectorAll(".page")
-    .forEach(page => {
-      page.classList.remove("active");
-    });
+    document.querySelectorAll(".page")
+        .forEach(p => p.classList.remove("active"));
 
-  const page =
-    document.getElementById(pageId);
+    document.getElementById(page)
+        .classList.add("active");
 
-  if(page){
-    page.classList.add("active");
-    window.scrollTo({
-      top:0,
-      behavior:"smooth"
-    });
-  }
-}
+    document.getElementById("lockedBtn")
+        .classList.remove("active");
 
+    document.getElementById("generateBtn")
+        .classList.remove("active");
 
-/* =====================================
-   PARTICULAS
-===================================== */
-
-const particleContainer =
-  document.getElementById("particles");
-
-for(let i = 0; i < 35; i++){
-
-  const particle =
-    document.createElement("span");
-
-  particle.style.position = "absolute";
-  particle.style.width =
-    Math.random() * 3 + 1 + "px";
-
-  particle.style.height =
-    particle.style.width;
-
-  particle.style.borderRadius = "50%";
-
-  particle.style.background =
-    "rgba(255,23,68," +
-    (Math.random() * .5 + .15) +
-    ")";
-
-  particle.style.left =
-    Math.random() * 100 + "%";
-
-  particle.style.top =
-    Math.random() * 100 + "%";
-
-  particle.style.boxShadow =
-    "0 0 8px rgba(255,23,68,.6)";
-
-  particle.style.animation =
-    "particleFloat " +
-    (Math.random() * 8 + 5) +
-    "s linear infinite";
-
-  particleContainer.appendChild(particle);
-}
-
-
-const particleStyle =
-document.createElement("style");
-
-particleStyle.textContent = `
-@keyframes particleFloat{
-  0%{
-    transform:translateY(0) translateX(0);
-    opacity:0;
-  }
-  15%{
-    opacity:1;
-  }
-  50%{
-    transform:translateY(-80px) translateX(25px);
-  }
-  100%{
-    transform:translateY(-170px) translateX(-20px);
-    opacity:0;
-  }
-}
-`;
-
-document.head.appendChild(particleStyle);
-
-
-/* =====================================
-   GENERAR KEY
-===================================== */
-
-const GENERATE_ENDPOINT =
-  "/api/generate";
-
-
-function showError(message){
-
-  const error =
-    document.getElementById("error");
-
-  error.textContent =
-    "⚠️ " + message;
-
-  error.classList.add("show");
-}
-
-
-function hideError(){
-
-  const error =
-    document.getElementById("error");
-
-  error.textContent = "";
-
-  error.classList.remove("show");
-}
-
-
-async function generateKey(){
-
-  const password =
-    document
-      .getElementById("password")
-      .value
-      .trim();
-
-  const button =
-    document
-      .getElementById("generateBtn");
-
-  const result =
-    document
-      .getElementById("result");
-
-  const keyValue =
-    document
-      .getElementById("keyValue");
-
-
-  hideError();
-
-  result.classList.remove("show");
-
-
-  if(!password){
-
-    showError(
-      "Introduce la contraseña de administrador."
-    );
-
-    return;
-  }
-
-
-  button.disabled = true;
-
-  button.innerHTML =
-    '<span class="spinner"></span>GENERANDO...';
-
-
-  try{
-
-    const response =
-      await fetch(
-        GENERATE_ENDPOINT,
-        {
-          method:"POST",
-
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
-
-          body:JSON.stringify({
-            password:password
-          })
-        }
-      );
-
-
-    let data = {};
-
-    try{
-      data = await response.json();
-    }catch(e){
-      data = {};
+    if(page === "locked"){
+        document.getElementById("lockedBtn")
+            .classList.add("active");
     }
 
+    if(page === "generate"){
+        document.getElementById("generateBtn")
+            .classList.add("active");
+    }
 
-    if(!response.ok){
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
 
- 
+
+/* GENERADOR DE KEY */
+
+function generateKey(){
+
+    const keyBox = document.getElementById("keyBox");
+    const loading = document.getElementById("loading");
+
+    keyBox.classList.remove("ready");
+    keyBox.textContent = "Generando...";
+
+    loading.classList.add("active");
+
+    setTimeout(() => {
+
+        const chars =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+        let random = "";
+
+        for(let i = 0; i < 16; i++){
+            random += chars.charAt(
+                Math.floor(Math.random() * chars.length)
+            );
+        }
+
+        const key =
+            "KYAMI-" +
+            random.substring(0,4) + "-" +
+            random.substring(4,8) + "-" +
+            random.substring(8,12) + "-" +
+            random.substring(12,16);
+
+        keyBox.textContent = key;
+        keyBox.classList.add("ready");
+
+        loading.classList.remove("active");
+
+    },800);
+}
+
+
+/* COPIAR KEY */
+
+async function copyKey(){
+
+    const keyBox = document.getElementById("keyBox");
+    const key = keyBox.textContent;
+
+    if(!key.startsWith("KYAMI-")){
+        alert("Primero genera una key.");
+        return;
+    }
+
+    try{
+
+        await navigator.clipboard.writeText(key);
+
+        const old =
+            document.querySelector(".copy-button").textContent;
+
+        document.querySelector(".copy-button")
+            .textContent = "✅ KEY COPIADA";
+
+        setTimeout(() => {
+
+            document.querySelector(".copy-button")
+                .textContent = old;
+
+        },1500);
+
+    }catch(error){
+
+        alert("No se pudo copiar automáticamente. Mantén presionada la key para copiarla.");
+
+    }
+}
+
+</script>
+
+</body>
+</html>
