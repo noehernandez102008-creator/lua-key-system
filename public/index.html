@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KYAMI MODZ • Key System</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: white;
+      background:
+        radial-gradient(circle at top, #3b0000 0%, #100000 35%, #050505 75%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 430px;
+    }
+
+    .card {
+      background: rgba(15, 15, 20, 0.96);
+      border: 1px solid #ff2525;
+      border-radius: 24px;
+      padding: 28px 22px;
+      box-shadow: 0 0 35px rgba(255, 0, 0, 0.25);
+      text-align: center;
+    }
+
+    .logo {
+      width: 82px;
+      height: 82px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #090909;
+      border: 2px solid #ff2525;
+      color: #ff3030;
+      font-size: 34px;
+      font-weight: 900;
+      box-shadow: 0 0 25px rgba(255, 0, 0, .35);
+    }
+
+    h1 {
+      font-size: 29px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .version {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: #300909;
+      color: #ff4040;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .actions {
+      margin-top: 28px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      border-radius: 13px;
+      text-decoration: none;
+      color: white;
+      font-weight: 800;
+      font-size: 15px;
+      transition: .2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .whatsapp {
+      background: #168c45;
+    }
+
+    .youtube {
+      background: #d90000;
+    }
+
+    .generate {
+      margin-top: 22px;
+      border: 1px solid #ff3030;
+      background: #220707;
+      cursor: pointer;
+    }
+
+    .key-box {
+      display: none;
+      margin-top: 15px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #090909;
+      border: 1px solid #333;
+    }
+
+    .key {
+      color: #ff4040;
+      font-weight: 900;
+      word-break: break-all;
+    }
+
+    .message {
+      margin-top: 10px;
+      color: #aaa;
+      font-size: 12px;
+    }
+
+    .footer {
+      margin-top: 22px;
+      color: #666;
+      font-size: 11px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+    <section class="card">
+
+      <div class="logo">K</div>
+
+      <h1>KYAMI MODZ</h1>
+
+      <p class="subtitle">
+        Key System • V4
+      </p>
+
+      <span class="version">
+        ESP • AIM • FOV
+      </span>
+
+      <div class="actions">
+
+        <a
+          class="button whatsapp"
+          href="https://whatsapp.com/channel/0029Vb7HbHUJ93wRQ6TZSE0g"
+          target="_blank"
+          rel="noopener"
+        >
+          💬 UNIRME AL CANAL DE WHATSAPP
+        </a>
+
+        <a
+          class="button youtube"
+          href="https://youtube.com/@kyami-modz90?si=XotEIvlfTQvGOSz1"
+          target="_blank"
+          rel="noopener"
+        >
+          ▶️ DAR LIKE / VER VIDEO EN YOUTUBE
+        </a>
+
+      </div>
+
+      <button
+        id="generate"
+        class="button generate"
+      >
+        🔑 GENERAR KEY
+      </button>
+
+      <div id="keyBox" class="key-box">
+        <div id="key" class="key"></div>
+        <div id="message" class="message"></div>
+      </div>
+
+      <div class="footer">
+        KYAMI-MODZ © 2026
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    const generateButton = document.getElementById("generate");
+    const keyBox = document.getElementById("keyBox");
+    const keyElement = document.getElementById("key");
+    const messageElement = document.getElementById("message");
+
+    generateButton.addEventListener("click", async () => {
+
+      generateButton.disabled = true;
+      generateButton.textContent = "GENERANDO...";
+
+      try {
+        const response = await fetch("/api/public/generate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || "No se pudo generar la key");
+        }
+
+        keyElement.textContent = data.key;
+
+        messageElement.textContent =
+          "Key generada. Caduca 8 horas después de su primera activación.";
+
+        keyBox.style.display = "block";
+
+      } catch (error) {
+
+        keyBox.style.display = "block";
+
+        keyElement.textContent = "ERROR";
+
+        messageElement.textContent =
+          error.message;
+
+      } finally {
+
+        generateButton.disabled = false;
+        generateButton.textContent = "🔑 GENERAR KEY";
+      }
+    });
+  </script>
+
+</body>
+</html>
