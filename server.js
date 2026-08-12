@@ -5,68 +5,219 @@ const path = require("path");
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "cambia-esta-clave";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Servir la página pública
-app.use(express.static(path.join(__dirname, "public")));
+// ======================================================
+// CONFIGURACIÓN
+// ======================================================
 
-// Guardamos las keys en memoria.
-// IMPORTANTE: en Render se pierden si el servicio se reinicia.
+const WHATSAPP_URL =
+  "https://whatsapp.com/channel/0029Vb7HbHUJ93wRQ6TZSE0g";
+
+const YOUTUBE_URL =
+  "https://youtube.com/@kyami-modz90?si=XotEIvlfTQvGOSz1";
+
+// ======================================================
+// DATOS EN MEMORIA
+// ======================================================
+
+const sessions = new Map();
 const keys = new Map();
 
-// Generador de keys
-function generateKey() {
-  const part1 = crypto.randomBytes(4).toString("hex").toUpperCase();
-  const part2 = crypto.randomBytes(4).toString("hex").toUpperCase();
+// ======================================================
+// FUNCIONES
+// ======================================================
 
-  return `KYAMI-${part1}-${part2}`;
+function randomId(bytes = 24) {
+  return crypto.randomBytes(bytes).toString("hex");
 }
 
-// Generar Key pública
-app.post("/api/public/generate", (req, res) => {
-  try {
-    const key = generateKey();
+function generateKey() {
+  const a = crypto.randomBytes(4).toString("hex").toUpperCase();
+  const b = crypto.randomBytes(4).toString("hex").toUpperCase();
 
-    keys.set(key, {
-      activated: false,
-      activatedAt: null,
-      createdAt: Date.now()
-    });
+  return `KYAMI-${a}-${b}`;
+}
 
-    res.json({
-      success: true,
-      key
-    });
-  } catch (error) {
-    console.error("Error generando key:", error);
+function cleanup() {
+  const now = Date.now();
 
-    res.status(500).json({
-      success: false,
-      error: "No se pudo generar la key"
-    });
+  // Sesiones de más de 30 minutos
+  for (const [id, session] of sessions) {
+    if (now - session.createdAt > 30 * 60 * 1000) {
+      sessions.delete(id);
+    }
   }
+
+  // Keys expiradas
+  for (const [key, data] of keys) {
+    if (
+      data.expiresAt &&
+      now >= data.expiresAt
+    ) {
+      keys.delete(key);
+    }
+  }
+}
+
+setInterval(cleanup, 60 * 1000);
+
+// ======================================================
+// ARCHIVOS DE LA WEB
+// ======================================================
+
+const publicDir = path.join(__dirname, "public");
+
+app.use(express.static(publicDir));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(publicDir, "index.html"));
 });
 
-// Generar Key desde administración
-app.post("/api/generate", (req, res) => {
-  const password = String(req.body?.password || "");
+// ======================================================
+// INFORMACIÓN PÚBLICA
+// ======================================================
 
-  if (password !== ADMIN_PASSWORD) {
-    return res.status(401).json({
+app.get("/api/info", (req, res) => {
+  res.json({
+    success: true,
+    whatsapp: WHATSAPP_URL,
+    youtube: YOUTUBE_URL
+  });
+});
+
+// ======================================================
+// CREAR SESIÓN
+// ======================================================
+
+app.post("/api/session", (req, res) => {
+  const sessionId = randomId();
+
+  sessions.set(sessionId, {
+    createdAt: Date.now(),
+    whatsapp: false,
+    youtube: false
+  });
+
+  res.json({
+    success: true,
+    sessionId
+  });
+});
+
+// ======================================================
+// MARCAR WHATSAPP
+// ======================================================
+
+app.post("/api/session/whatsapp", (req, res) => {
+  const { sessionId } = req.body;
+
+  const session = sessions.get(sessionId);
+
+  if (!session) {
+    return res.status(404).json({
       success: false,
-      error: "Contraseña incorrecta"
+      error: "Sesión inválida o expirada."
+    });
+  }
+
+  session.whatsapp = true;
+
+  res.json({
+    success: true,
+    whatsapp: session.whatsapp,
+    youtube: session.youtube,
+    ready: session.whatsapp && session.youtube
+  });
+});
+
+// ======================================================
+// MARCAR YOUTUBE
+// ======================================================
+
+app.post("/api/session/youtube", (req, res) => {
+  const { sessionId } = req.body;
+
+  const session = sessions.get(sessionId);
+
+  if (!session) {
+    return res.status(404).json({
+      success: false,
+      error: "Sesión inválida o expirada."
+    });
+  }
+
+  session.youtube = true;
+
+  res.json({
+    success: true,
+    whatsapp: session.whatsapp,
+    youtube: session.youtube,
+    ready: session.whatsapp && session.youtube
+  });
+});
+
+// ======================================================
+// COMPROBAR ESTADO
+// ======================================================
+
+app.get("/api/session/:sessionId", (req, res) => {
+  const session =
+    sessions.get(req.params.sessionId);
+
+  if (!session) {
+    return res.status(404).json({
+      success: false,
+      error: "Sesión inválida o expirada."
+    });
+  }
+
+  res.json({
+    success: true,
+    whatsapp: session.whatsapp,
+    youtube: session.youtube,
+    ready:
+      session.whatsapp &&
+      session.youtube
+  });
+});
+
+// ======================================================
+// GENERAR KEY
+// ======================================================
+
+app.post("/api/key/generate", (req, res) => {
+  const { sessionId } = req.body;
+
+  const session = sessions.get(sessionId);
+
+  if (!session) {
+    return res.status(404).json({
+      success: false,
+      error: "Sesión inválida o expirada."
+    });
+  }
+
+  // BLOQUEO DEL SERVIDOR
+  if (!session.whatsapp || !session.youtube) {
+    return res.status(403).json({
+      success: false,
+      blocked: true,
+      error:
+        "Debes completar los dos pasos antes de generar la Key.",
+      whatsapp: session.whatsapp,
+      youtube: session.youtube
     });
   }
 
   const key = generateKey();
 
   keys.set(key, {
-    activated: false,
+    createdAt: Date.now(),
     activatedAt: null,
-    createdAt: Date.now()
+    expiresAt: null
   });
 
   res.json({
@@ -75,14 +226,21 @@ app.post("/api/generate", (req, res) => {
   });
 });
 
-// Comprobar Key
-app.post("/api/verify", (req, res) => {
-  const key = String(req.body?.key || "").trim();
+// ======================================================
+// VERIFICAR KEY
+// ======================================================
+
+app.post("/api/key/verify", (req, res) => {
+  const key =
+    String(req.body?.key || "")
+      .trim()
+      .toUpperCase();
 
   if (!key) {
     return res.status(400).json({
+      success: false,
       valid: false,
-      error: "Introduce una key"
+      error: "Introduce una Key."
     });
   }
 
@@ -90,65 +248,89 @@ app.post("/api/verify", (req, res) => {
 
   if (!data) {
     return res.status(404).json({
+      success: false,
       valid: false,
-      error: "Key inválida"
+      error: "Key inválida o inexistente."
     });
   }
 
   const now = Date.now();
 
-  // Las 8 horas empiezan cuando la key se usa por primera vez
-  if (!data.activated) {
-    data.activated = true;
+  // Las 8 horas comienzan al primer uso
+  if (!data.activatedAt) {
     data.activatedAt = now;
+    data.expiresAt =
+      now + 8 * 60 * 60 * 1000;
   }
 
-  const expiresAt = data.activatedAt + (8 * 60 * 60 * 1000);
-  const remaining = expiresAt - now;
-
-  if (remaining <= 0) {
+  if (now >= data.expiresAt) {
     keys.delete(key);
 
     return res.status(410).json({
+      success: false,
       valid: false,
       expired: true,
-      error: "La key ha expirado"
+      error: "Esta Key ha expirado."
     });
   }
 
+  const remaining =
+    data.expiresAt - now;
+
   res.json({
+    success: true,
     valid: true,
-    expired: false,
     key,
-    activated: data.activated,
-    activatedAt: data.activatedAt,
-    expiresAt,
-    remainingMs: remaining,
-    remainingHours: remaining / (60 * 60 * 1000)
+    expiresAt: data.expiresAt,
+    remainingMs: remaining
   });
 });
 
-// Estado del servidor
-app.get("/api/status", (req, res) => {
+// ======================================================
+// HEALTH CHECK
+// ======================================================
+
+app.get("/api/health", (req, res) => {
   res.json({
     online: true,
-    service: "KYAMI MODZ KEY SYSTEM",
-    keys: keys.size
+    service: "KYAMI MODZ KEY SYSTEM"
   });
 });
 
-// Cualquier otra ruta devuelve el index
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+// ======================================================
+// ERROR 404 PARA API
+// ======================================================
+
+app.use("/api", (req, res) => {
+  res.status(404).json({
+    success: false,
+    error: "Endpoint no encontrado."
+  });
 });
 
-// Arrancar servidor
+// ======================================================
+// ERROR GENERAL
+// ======================================================
+
+app.use((err, req, res, next) => {
+  console.error(err);
+
+  res.status(500).json({
+    success: false,
+    error: "Error interno del servidor."
+  });
+});
+
+// ======================================================
+// INICIAR
+// ======================================================
+
 app.listen(PORT, "0.0.0.0", () => {
-  console.log("======================================");
+  console.log("");
+  console.log("====================================");
   console.log("       KYAMI MODZ KEY SYSTEM");
-  console.log("======================================");
-  console.log(`Servidor iniciado en el puerto ${PORT}`);
-  console.log("API pública: /api/public/generate");
-  console.log("API verificar: /api/verify");
-  console.log("======================================");
+  console.log("====================================");
+  console.log(`Servidor: puerto ${PORT}`);
+  console.log("Sistema iniciado correctamente");
+  console.log("====================================");
 });
