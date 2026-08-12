@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08080c">
+  <title>KYAMI MODZ | Key System</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: white;
+      background:
+        radial-gradient(circle at top, #650000 0%, #180303 30%, #050507 75%);
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 460px;
+      margin: auto;
+    }
+
+    .card {
+      background: rgba(12,12,17,.97);
+      border: 1px solid #ff2929;
+      border-radius: 25px;
+      padding: 24px;
+      box-shadow: 0 0 40px rgba(255,0,0,.22);
+    }
+
+    .logo {
+      width: 85px;
+      height: 85px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #08080a;
+      border: 2px solid #ff3030;
+      color: #ff3030;
+      font-size: 38px;
+      font-weight: 900;
+      box-shadow: 0 0 30px rgba(255,0,0,.35);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      margin-top: 7px;
+      text-align: center;
+      color: #999;
+      font-size: 13px;
+    }
+
+    .badge {
+      width: fit-content;
+      margin: 13px auto 0;
+      padding: 7px 13px;
+      border-radius: 20px;
+      background: #300707;
+      color: #ff4545;
+      border: 1px solid #641515;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    .section {
+      margin-top: 22px;
+      padding: 17px;
+      background: #111117;
+      border: 1px solid #27272f;
+      border-radius: 17px;
+    }
+
+    .title {
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .buttons {
+      display: grid;
+      gap: 10px;
+    }
+
+    .button {
+      width: 100%;
+      padding: 14px;
+      border: 0;
+      border-radius: 13px;
+      color: white;
+      font-size: 13px;
+      font-weight: 900;
+      text-decoration: none;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .whatsapp {
+      background: #128c4b;
+    }
+
+    .youtube {
+      background: #d90000;
+    }
+
+    .generate {
+      margin-top: 15px;
+      background: linear-gradient(135deg,#ff3535,#a90000);
+    }
+
+    .generate:disabled {
+      opacity: .6;
+    }
+
+    .key-box {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 14px;
+      background: #09090d;
+      border: 1px solid #36363e;
+    }
+
+    .key-label {
+      margin-bottom: 8px;
+      color: #888;
+      font-size: 11px;
+    }
+
+    .key {
+      padding: 14px 10px;
+      border-radius: 11px;
+      background: #15151b;
+      border: 1px solid #36363e;
+      color: #ff4545;
+      font-size: 16px;
+      font-weight: 900;
+      text-align: center;
+      word-break: break-all;
+    }
+
+    .copy {
+      margin-top: 10px;
+      background: #22222a;
+      border: 1px solid #44444d;
+    }
+
+    .copied {
+      background: #146238 !important;
+      border-color: #28a866 !important;
+    }
+
+    .status {
+      margin-top: 10px;
+      text-align: center;
+      color: #45df87;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .steps {
+      display: grid;
+      gap: 10px;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #bbb;
+      font-size: 12px;
+    }
+
+    .number {
+      min-width: 26px;
+      height: 26px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      background: #350808;
+      color: #ff4141;
+      font-weight: 900;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .stat {
+      padding: 13px;
+      text-align: center;
+      border-radius: 12px;
+      background: #101016;
+      border: 1px solid #26262e;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .stat small {
+      color: #777;
+      font-size: 9px;
+    }
+
+    .footer {
+      margin-top: 20px;
+      color: #555;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    .error {
+      color: #ff5555 !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <section class="card">
+
+      <div class="logo">K</div>
+
+      <h1>KYAMI MODZ</h1>
+
+      <p class="subtitle">
+        Official Key System
+      </p>
+
+      <div class="badge">
+        V4 • ESP • SKELETON • AIM • FOV
+      </div>
+
+      <section class="section">
+
+        <div class="title">
+          🔥 APOYA A KYAMI
+        </div>
+
+        <div class="buttons">
+
+          <a
+            class="button whatsapp"
+            href="https://whatsapp.com/channel/0029Vb7HbHUJ93wRQ6TZSE0g"
+            target="_blank"
+            rel="noopener"
+          >
+            💬 UNIRME AL CANAL DE WHATSAPP
+          </a>
+
+          <a
+            class="button youtube"
+            href="https://youtube.com/@kyami-modz90?si=XotEIvlfTQvGOSz1"
+            target="_blank"
+            rel="noopener"
+          >
+            ▶️ VER MI YOUTUBE
+          </a>
+
+        </div>
+
+      </section>
+
+      <section class="section">
+
+        <div class="title">
+          🔑 OBTENER KEY
+        </div>
+
+        <p class="subtitle" style="text-align:left;">
+          Pulsa el botón para solicitar tu key.
+        </p>
+
+        <button id="generate" class="button generate">
+          ⚡ GENERAR KEY
+        </button>
+
+        <div id="keyBox" class="key-box">
+
+          <div class="key-label">
+            TU KEY
+          </div>
+
+          <div id="key" class="key">-</div>
+
+          <button id="copy" class="button copy">
+            📋 COPIAR KEY
+          </button>
+
+          <div id="status" class="status">
+            ✅ KEY GENERADA
+          </div>
+
+        </div>
+
+      </section>
+
+      <section class="section">
+
+        <div class="title">
+          📋 ¿CÓMO CONSEGUIRLA?
+        </div>
+
+        <div class="steps">
+
+          <div class="step">
+            <div class="number">1</div>
+            <div>Únete al canal oficial de WhatsApp.</div>
+          </div>
+
+          <div class="step">
+            <div class="number">2</div>
+            <div>Apoya el contenido de YouTube.</div>
+          </div>
+
+          <div class="step">
+            <div class="number">3</div>
+            <div>Presiona GENERAR KEY.</div>
+          </div>
+
+          <div class="step">
+            <div class="number">4</div>
+            <div>Copia la key y úsala en tu sistema.</div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <div class="stats">
+
+        <div class="stat">
+          <strong>8 HORAS</strong>
+          <small>DURACIÓN</small>
+        </div>
+
+        <div class="stat">
+          <strong>V4</strong>
+          <small>VERSIÓN</small>
+        </div>
+
+      </div>
+
+      <div class="footer">
+        KYAMI-MODZ © 2026
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    const generate = document.getElementById("generate");
+    const keyBox = document.getElementById("keyBox");
+    const keyElement = document.getElementById("key");
+    const copy = document.getElementById("copy");
+    const status = document.getElementById("status");
+
+    generate.addEventListener("click", async () => {
+
+      generate.disabled = true;
+      generate.textContent = "⏳ GENERANDO...";
+
+      try {
+
+        const response = await fetch("/api/public/generate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success || !data.key) {
+          throw new Error(data.error || "No se pudo generar la key.");
+        }
+
+        keyElement.textContent = data.key;
+        keyBox.style.display = "block";
+
+        status.innerHTML = "✅ KEY GENERADA";
+
+        generate.textContent = "🔄 GENERAR OTRA KEY";
+
+      } catch (error) {
+
+        keyBox.style.display = "block";
+        keyElement.textContent = "ERROR";
+
+        status.innerHTML =
+          "❌ " + error.message;
+
+        status.classList.add("error");
+
+        generate.textContent = "⚠️ INTENTAR DE NUEVO";
+
+      } finally {
+
+        generate.disabled = false;
+
+      }
+
+    });
+
+    copy.addEventListener("click", async () => {
+
+      const key = keyElement.textContent.trim();
+
+      if (!key || key === "-" || key === "ERROR") {
+        return;
+      }
+
+      try {
+
+        await navigator.clipboard.writeText(key);
+
+      } catch {
+
+        const textarea = document.createElement("textarea");
+
+        textarea.value = key;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        textarea.remove();
+
+      }
+
+      copy.textContent = "✅ KEY COPIADA";
+      copy.classList.add("copied");
+
+      setTimeout(() => {
+        copy.textContent = "📋 COPIAR KEY";
+        copy.classList.remove("copied");
+      }, 2000);
+
+    });
+  </script>
+
+</body>
+</html>
