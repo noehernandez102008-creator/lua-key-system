@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#08080c">
-  <title>KYAMI MODZ • Key System</title>
+  <meta name="theme-color" content="#080808">
+  <title>KYAMI MODZ | Key System</title>
 
   <style>
     * {
@@ -15,27 +15,37 @@
 
     body {
       min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: Arial, sans-serif;
       color: #fff;
       background:
-        radial-gradient(circle at 50% -10%, #650909 0%, #180303 32%, #070709 72%);
+        radial-gradient(circle at top, #5d0000 0%, #190000 35%, #050505 75%);
       padding: 20px;
     }
 
     .container {
       width: 100%;
-      max-width: 460px;
+      max-width: 480px;
       margin: auto;
     }
 
     .card {
-      background: rgba(12, 12, 17, .97);
-      border: 1px solid rgba(255, 45, 45, .65);
-      border-radius: 25px;
+      background: rgba(12, 12, 16, .96);
+      border: 1px solid #ff3030;
+      border-radius: 24px;
       padding: 24px;
-      box-shadow:
-        0 0 40px rgba(255, 0, 0, .18),
-        inset 0 0 30px rgba(255, 0, 0, .025);
+      box-shadow: 0 0 40px rgba(255, 0, 0, .20);
+      animation: appear .7s ease;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .logo {
@@ -46,463 +56,439 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #08080a;
+      background: #080808;
       border: 2px solid #ff3030;
-      color: #ff3030;
-      font-size: 35px;
+      box-shadow: 0 0 25px rgba(255, 0, 0, .45);
+      font-size: 27px;
       font-weight: 900;
-      box-shadow: 0 0 28px rgba(255, 35, 35, .35);
+      color: #ff3030;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 15px rgba(255,0,0,.25);
+      }
+      50% {
+        box-shadow: 0 0 35px rgba(255,0,0,.65);
+      }
     }
 
     h1 {
       text-align: center;
-      font-size: 30px;
-      font-weight: 900;
-      letter-spacing: 1px;
+      font-size: 27px;
+      margin-bottom: 7px;
     }
 
     .subtitle {
       text-align: center;
       color: #999;
-      margin-top: 7px;
       font-size: 13px;
+      margin-bottom: 22px;
     }
 
-    .badge {
-      display: table;
-      margin: 13px auto 0;
-      padding: 6px 13px;
-      border-radius: 30px;
-      background: #2d0808;
-      color: #ff4646;
-      border: 1px solid #5c1515;
-      font-size: 10px;
-      font-weight: bold;
+    .status-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 13px;
+      margin-bottom: 10px;
+      border-radius: 14px;
+      background: #111116;
+      border: 1px solid #29292f;
     }
 
-    .section {
-      margin-top: 22px;
-      padding: 17px;
-      background: #111117;
-      border-radius: 17px;
-      border: 1px solid #25252d;
-    }
-
-    .section-title {
-      font-size: 14px;
-      font-weight: 900;
-      margin-bottom: 12px;
-    }
-
-    .social {
-      display: grid;
+    .status-left {
+      display: flex;
+      align-items: center;
       gap: 10px;
     }
 
-    .button {
-      width: 100%;
-      border: 0;
-      border-radius: 13px;
-      padding: 14px;
-      color: #fff;
-      font-weight: 900;
-      font-size: 13px;
-      text-decoration: none;
-      text-align: center;
-      cursor: pointer;
-      transition: .18s;
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #777;
     }
 
-    .button:active {
-      transform: scale(.98);
+    .dot.ok {
+      background: #18e67b;
+      box-shadow: 0 0 12px #18e67b;
+    }
+
+    .state {
+      font-size: 12px;
+      font-weight: bold;
+      color: #999;
+    }
+
+    .state.ok {
+      color: #18e67b;
+    }
+
+    .step {
+      margin-top: 16px;
+      padding: 17px;
+      border-radius: 17px;
+      background: linear-gradient(145deg, #15151a, #0c0c10);
+      border: 1px solid #29292f;
+    }
+
+    .step h2 {
+      font-size: 16px;
+      margin-bottom: 7px;
+    }
+
+    .step p {
+      color: #999;
+      font-size: 12px;
+      line-height: 1.5;
+      margin-bottom: 13px;
+    }
+
+    button,
+    .link-button {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 13px;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      transition: .2s;
     }
 
     .whatsapp {
-      background: #128c4b;
+      background: #168c4b;
     }
 
     .youtube {
-      background: #d90000;
+      background: #d71919;
+    }
+
+    button:hover,
+    .link-button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.12);
+    }
+
+    .confirm {
+      margin-top: 9px;
+      background: #29292f;
+    }
+
+    .confirm.done {
+      background: #126c42;
     }
 
     .generate {
-      margin-top: 15px;
-      background: linear-gradient(135deg, #ff3434, #a90000);
-      box-shadow: 0 7px 22px rgba(255, 0, 0, .18);
+      margin-top: 20px;
+      background: linear-gradient(90deg, #ff1e1e, #a90000);
+      box-shadow: 0 0 25px rgba(255,0,0,.25);
     }
 
     .generate:disabled {
-      opacity: .6;
-      cursor: wait;
+      cursor: not-allowed;
+      opacity: .35;
+      filter: grayscale(1);
+      transform: none;
+      box-shadow: none;
     }
 
-    .key-panel {
+    .message {
       display: none;
       margin-top: 15px;
-      padding: 15px;
-      border-radius: 15px;
-      background: #09090d;
-      border: 1px solid #34343d;
+      padding: 13px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      background: rgba(255, 0, 0, .12);
+      border: 1px solid #8d2222;
+      color: #ff7373;
+    }
+
+    .message.success {
+      background: rgba(0, 255, 120, .10);
+      border: 1px solid #17633d;
+      color: #5cffaa;
+    }
+
+    .key-box {
+      display: none;
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 16px;
+      text-align: center;
+      background: #080808;
+      border: 1px solid #ff3030;
+      animation: appear .4s ease;
+    }
+
+    .key-box.show {
+      display: block;
     }
 
     .key-label {
-      color: #888;
+      color: #999;
       font-size: 11px;
       margin-bottom: 8px;
     }
 
-    .key {
-      min-height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px;
-      border-radius: 11px;
-      background: #15151b;
-      border: 1px solid #33333c;
-      color: #ff4b4b;
-      font-size: 16px;
+    #key {
+      font-size: 20px;
       font-weight: 900;
-      letter-spacing: 1px;
+      color: #ff4242;
       word-break: break-all;
-      text-align: center;
+      letter-spacing: 1px;
     }
 
     .copy {
-      margin-top: 10px;
-      background: #22222a;
-      border: 1px solid #44444d;
-    }
-
-    .copy.copied {
-      background: #155c36;
-      border-color: #28a866;
-    }
-
-    .status {
       margin-top: 12px;
-      text-align: center;
-      font-size: 11px;
-      color: #aaa;
-    }
-
-    .status span {
-      color: #45df87;
-      font-weight: bold;
-    }
-
-    .steps {
-      display: grid;
-      gap: 9px;
-    }
-
-    .step {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      color: #bbb;
-      font-size: 12px;
-    }
-
-    .number {
-      min-width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #350909;
-      color: #ff4141;
-      font-weight: 900;
-    }
-
-    .info {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 15px;
-    }
-
-    .info-box {
-      padding: 13px 8px;
-      border-radius: 12px;
-      background: #101016;
-      border: 1px solid #26262e;
-      text-align: center;
-    }
-
-    .info-box strong {
-      display: block;
-      color: #fff;
-      font-size: 13px;
-    }
-
-    .info-box small {
-      color: #777;
-      font-size: 9px;
+      background: #24242a;
     }
 
     .footer {
-      margin-top: 20px;
       text-align: center;
-      color: #555;
-      font-size: 10px;
-    }
-
-    .error {
-      color: #ff5555 !important;
+      color: #666;
+      font-size: 11px;
+      margin-top: 18px;
     }
   </style>
 </head>
 
 <body>
 
-  <main class="container">
-
-    <section class="card">
+  <div class="container">
+    <div class="card">
 
       <div class="logo">K</div>
 
       <h1>KYAMI MODZ</h1>
+      <div class="subtitle">KEY SYSTEM • 8 HORAS</div>
 
-      <p class="subtitle">
-        Official Key System
-      </p>
-
-      <div class="badge">
-        V4 • ESP • SKELETON • AIM • FOV
+      <!-- ESTADOS -->
+      <div class="status-box">
+        <div class="status-left">
+          <div id="waDot" class="dot"></div>
+          <span>WhatsApp</span>
+        </div>
+        <span id="waState" class="state">NO COMPLETADO</span>
       </div>
 
-      <section class="section">
-
-        <div class="section-title">
-          🔥 APOYA A KYAMI
+      <div class="status-box">
+        <div class="status-left">
+          <div id="ytDot" class="dot"></div>
+          <span>YouTube</span>
         </div>
+        <span id="ytState" class="state">NO COMPLETADO</span>
+      </div>
 
-        <div class="social">
-
-          <a
-            class="button whatsapp"
-            href="https://whatsapp.com/channel/0029Vb7HbHUJ93wRQ6TZSE0g"
-            target="_blank"
-            rel="noopener"
-          >
-            💬 UNIRME AL CANAL DE WHATSAPP
-          </a>
-
-          <a
-            class="button youtube"
-            href="https://youtube.com/@kyami-modz90?si=XotEIvlfTQvGOSz1"
-            target="_blank"
-            rel="noopener"
-          >
-            ▶️ VER / DAR LIKE AL VIDEO
-          </a>
-
-        </div>
-
-      </section>
-
-      <section class="section">
-
-        <div class="section-title">
-          🔑 OBTENER KEY
-        </div>
-
-        <p class="subtitle" style="text-align:left;margin-bottom:12px;">
-          Completa los pasos anteriores y genera tu key.
+      <!-- PASO 1 -->
+      <div class="step">
+        <h2>🟢 Paso 1 — WhatsApp</h2>
+        <p>
+          Abre el canal y después pulsa el botón de confirmación.
         </p>
 
-        <button
-          id="generate"
-          class="button generate"
+        <a
+          class="link-button whatsapp"
+          href="https://whatsapp.com/"
+          target="_blank"
+          rel="noopener"
         >
-          ⚡ GENERAR KEY
+          ABRIR CANAL
+        </a>
+
+        <button id="waConfirm" class="confirm" onclick="completeWhatsApp()">
+          ✓ Ya lo hice
         </button>
+      </div>
 
-        <div id="keyPanel" class="key-panel">
+      <!-- PASO 2 -->
+      <div class="step">
+        <h2>🔴 Paso 2 — YouTube</h2>
+        <p>
+          Abre el canal/video y después pulsa el botón de confirmación.
+        </p>
 
-          <div class="key-label">
-            TU KEY
-          </div>
+        <a
+          class="link-button youtube"
+          href="https://youtube.com/"
+          target="_blank"
+          rel="noopener"
+        >
+          ABRIR YOUTUBE
+        </a>
 
-          <div id="key" class="key">
-            -
-          </div>
+        <button id="ytConfirm" class="confirm" onclick="completeYouTube()">
+          ✓ Ya lo hice
+        </button>
+      </div>
 
-          <button
-            id="copy"
-            class="button copy"
-          >
-            📋 COPIAR KEY
-          </button>
+      <!-- GENERAR -->
+      <button
+        id="generateButton"
+        class="generate"
+        disabled
+        onclick="generarKey()"
+      >
+        🔒 GENERAR KEY
+      </button>
 
-          <div id="status" class="status">
-            Estado: <span>GENERADA</span>
-          </div>
+      <div id="message" class="message"></div>
 
-        </div>
+      <div id="keyBox" class="key-box">
+        <div class="key-label">TU KEY</div>
+        <div id="key">---</div>
 
-      </section>
-
-      <section class="section">
-
-        <div class="section-title">
-          📋 ¿CÓMO CONSEGUIRLA?
-        </div>
-
-        <div class="steps">
-
-          <div class="step">
-            <div class="number">1</div>
-            <div>Únete al canal oficial de WhatsApp.</div>
-          </div>
-
-          <div class="step">
-            <div class="number">2</div>
-            <div>Mira y apoya el contenido de YouTube.</div>
-          </div>
-
-          <div class="step">
-            <div class="number">3</div>
-            <div>Presiona <b>GENERAR KEY</b>.</div>
-          </div>
-
-          <div class="step">
-            <div class="number">4</div>
-            <div>Copia tu key y úsala en tu script.</div>
-          </div>
-
-        </div>
-
-      </section>
-
-      <div class="info">
-
-        <div class="info-box">
-          <strong>8 HORAS</strong>
-          <small>DURACIÓN</small>
-        </div>
-
-        <div class="info-box">
-          <strong>V4</strong>
-          <small>VERSIÓN</small>
-        </div>
-
+        <button class="copy" onclick="copiarKey()">
+          📋 COPIAR KEY
+        </button>
       </div>
 
       <div class="footer">
-        KYAMI-MODZ © 2026 • Key System
+        La key tiene una duración de 8 horas desde su primer uso.
       </div>
 
-    </section>
-
-  </main>
+    </div>
+  </div>
 
   <script>
-    const generateButton = document.getElementById("generate");
-    const keyPanel = document.getElementById("keyPanel");
-    const keyElement = document.getElementById("key");
-    const copyButton = document.getElementById("copy");
-    const statusElement = document.getElementById("status");
+    let whatsappJoined = false;
+    let youtubeLiked = false;
 
-    generateButton.addEventListener("click", async () => {
+    function updateButton() {
+      const button = document.getElementById("generateButton");
 
-      generateButton.disabled = true;
-      generateButton.textContent = "⏳ GENERANDO...";
+      if (whatsappJoined && youtubeLiked) {
+        button.disabled = false;
+        button.innerHTML = "🔑 GENERAR KEY";
+      } else {
+        button.disabled = true;
+        button.innerHTML = "🔒 COMPLETA LOS 2 PASOS";
+      }
+    }
+
+    function completeWhatsApp() {
+      whatsappJoined = true;
+
+      document.getElementById("waDot").classList.add("ok");
+      document.getElementById("waState").textContent = "COMPLETADO";
+      document.getElementById("waState").classList.add("ok");
+
+      const button = document.getElementById("waConfirm");
+      button.classList.add("done");
+      button.textContent = "✓ COMPLETADO";
+
+      updateButton();
+    }
+
+    function completeYouTube() {
+      youtubeLiked = true;
+
+      document.getElementById("ytDot").classList.add("ok");
+      document.getElementById("ytState").textContent = "COMPLETADO";
+      document.getElementById("ytState").classList.add("ok");
+
+      const button = document.getElementById("ytConfirm");
+      button.classList.add("done");
+      button.textContent = "✓ COMPLETADO";
+
+      updateButton();
+    }
+
+    async function generarKey() {
+      if (!whatsappJoined || !youtubeLiked) {
+        mostrarMensaje(
+          "Completa los 2 pasos antes de generar la key.",
+          "error"
+        );
+        return;
+      }
+
+      const button = document.getElementById("generateButton");
+
+      button.disabled = true;
+      button.textContent = "⏳ GENERANDO...";
 
       try {
-
         const response = await fetch("/api/public/generate", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
-          }
+          },
+          body: JSON.stringify({
+            whatsappJoined: true,
+            youtubeLiked: true
+          })
         });
 
         const data = await response.json();
 
-        if (!response.ok || !data.success || !data.key) {
+        if (!response.ok || !data.success) {
           throw new Error(data.error || "No se pudo generar la key.");
         }
 
-        keyElement.textContent = data.key;
+        document.getElementById("key").textContent = data.key;
+        document.getElementById("keyBox").classList.add("show");
 
-        keyPanel.style.display = "block";
+        mostrarMensaje(
+          "✅ Key generada correctamente.",
+          "success"
+        );
 
-        statusElement.innerHTML =
-          'Estado: <span>GENERADA</span>';
-
-        generateButton.textContent = "✅ KEY GENERADA";
-
-      } catch (error) {
-
-        keyPanel.style.display = "block";
-
-        keyElement.textContent = "ERROR";
-
-        statusElement.innerHTML =
-          '<span class="error">' +
-          error.message +
-          '</span>';
-
-        generateButton.textContent = "⚠️ INTENTAR DE NUEVO";
-
-      } finally {
-
-        generateButton.disabled = false;
-
-      }
-
-    });
-
-    copyButton.addEventListener("click", async () => {
-
-      const key = keyElement.textContent.trim();
-
-      if (!key || key === "-" || key === "ERROR") {
-        return;
-      }
-
-      try {
-
-        await navigator.clipboard.writeText(key);
-
-        copyButton.textContent = "✅ KEY COPIADA";
-
-        copyButton.classList.add("copied");
-
-        setTimeout(() => {
-
-          copyButton.textContent = "📋 COPIAR KEY";
-
-          copyButton.classList.remove("copied");
-
-        }, 2000);
+        button.textContent = "✓ KEY GENERADA";
 
       } catch (error) {
+        console.error(error);
 
-        const textArea = document.createElement("textarea");
+        mostrarMensaje(
+          error.message || "Error conectando con el servidor.",
+          "error"
+        );
 
-        textArea.value = key;
-
-        document.body.appendChild(textArea);
-
-        textArea.select();
-
-        document.execCommand("copy");
-
-        textArea.remove();
-
-        copyButton.textContent = "✅ KEY COPIADA";
-
-        setTimeout(() => {
-          copyButton.textContent = "📋 COPIAR KEY";
-        }, 2000);
-
+        button.disabled = false;
+        button.textContent = "🔑 GENERAR KEY";
       }
+    }
 
-    });
+    function copiarKey() {
+      const key = document.getElementById("key").textContent;
+
+      if (!key || key === "---") return;
+
+      navigator.clipboard.writeText(key)
+        .then(() => {
+          mostrarMensaje("📋 Key copiada al portapapeles.", "success");
+        })
+        .catch(() => {
+          mostrarMensaje(
+            "No se pudo copiar automáticamente.",
+            "error"
+          );
+        });
+    }
+
+    function mostrarMensaje(texto, tipo) {
+      const message = document.getElementById("message");
+
+      message.textContent = texto;
+      message.className = "message show " + tipo;
+    }
+
+    updateButton();
   </script>
 
 </body>
