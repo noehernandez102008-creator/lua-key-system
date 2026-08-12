@@ -1,594 +1,1192 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#08080c">
-  <meta name="description" content="KYAMI MODZ - Sistema de Keys">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#050509">
+<title>KYAMI MODZ | Key System</title>
 
-  <title>KYAMI MODZ | Key System</title>
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+:root{
+  --red:#ff1744;
+  --red2:#ff003c;
+  --dark:#050509;
+  --card:rgba(13,13,20,.88);
+  --line:rgba(255,23,68,.25);
+  --white:#fff;
+  --gray:#92929d;
+  --green:#00e676;
+  --blue:#4da3ff;
+}
 
-    :root {
-      --red: #ff3030;
-      --red2: #ff5757;
-      --dark: #08080c;
-      --card: rgba(18, 18, 25, 0.92);
-      --text: #ffffff;
-      --muted: #a5a5ad;
-      --green: #20e39a;
-    }
+html,body{
+  width:100%;
+  min-height:100%;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#050509;
+  color:white;
+  overflow-x:hidden;
+}
 
-    body {
-      min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 50% 0%, rgba(255, 40, 40, .25), transparent 35%),
-        radial-gradient(circle at 0% 100%, rgba(120, 0, 0, .18), transparent 35%),
-        #050507;
-      padding: 18px;
-      overflow-x: hidden;
-    }
+body{
+  min-height:100vh;
+}
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-      background-size: 35px 35px;
-      mask-image: linear-gradient(to bottom, black, transparent);
-    }
+/* =========================
+   FONDO ANIMADO
+========================= */
 
-    .container {
-      width: 100%;
-      max-width: 520px;
-      margin: auto;
-      position: relative;
-      z-index: 1;
-    }
+.background{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  z-index:-5;
+  background:
+    radial-gradient(circle at 50% -10%,rgba(255,0,60,.25),transparent 35%),
+    radial-gradient(circle at 100% 100%,rgba(110,0,255,.12),transparent 35%),
+    #050509;
+}
 
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 18px;
-      padding: 4px 2px;
-    }
+.grid{
+  position:absolute;
+  inset:-50%;
+  width:200%;
+  height:200%;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:45px 45px;
+  transform:rotate(8deg);
+  animation:gridMove 18s linear infinite;
+}
 
-    .brand-small {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      font-weight: 800;
-      letter-spacing: .5px;
-    }
+@keyframes gridMove{
+  from{transform:translateY(0) rotate(8deg)}
+  to{transform:translateY(45px) rotate(8deg)}
+}
 
-    .online {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: #bcbcc5;
-      font-size: 12px;
-    }
+.orb{
+  position:absolute;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:.22;
+  animation:orbFloat 8s ease-in-out infinite;
+}
 
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 12px rgba(32,227,154,.8);
-    }
+.orb.one{
+  background:#ff003c;
+  left:-100px;
+  top:20%;
+}
 
-    .card {
-      position: relative;
-      overflow: hidden;
-      background: var(--card);
-      border: 1px solid rgba(255,48,48,.55);
-      border-radius: 28px;
-      padding: 28px 20px;
-      box-shadow:
-        0 0 50px rgba(255,0,0,.12),
-        inset 0 0 40px rgba(255,255,255,.015);
-      backdrop-filter: blur(12px);
-    }
+.orb.two{
+  background:#7000ff;
+  right:-100px;
+  bottom:5%;
+  animation-delay:2s;
+}
 
-    .card::before {
-      content: "";
-      position: absolute;
-      width: 220px;
-      height: 220px;
-      top: -130px;
-      right: -90px;
-      background: rgba(255,40,40,.16);
-      filter: blur(35px);
-      border-radius: 50%;
-    }
+@keyframes orbFloat{
+  0%,100%{transform:translate(0,0)}
+  50%{transform:translate(40px,-35px)}
+}
 
-    .logo {
-      width: 92px;
-      height: 92px;
-      margin: 0 auto 16px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(145deg, #15151b, #050507);
-      border: 2px solid var(--red);
-      box-shadow:
-        0 0 25px rgba(255,48,48,.45),
-        inset 0 0 20px rgba(255,48,48,.1);
-      font-size: 27px;
-      font-weight: 900;
-      color: var(--red);
-    }
+#particles{
+  position:absolute;
+  inset:0;
+}
 
-    h1 {
-      text-align: center;
-      font-size: 31px;
-      font-weight: 900;
-      letter-spacing: 1px;
-    }
+/* =========================
+   APP
+========================= */
 
-    .subtitle {
-      text-align: center;
-      color: var(--muted);
-      margin-top: 7px;
-      font-size: 13px;
-    }
+.app{
+  width:100%;
+  max-width:500px;
+  margin:auto;
+  padding:18px;
+  position:relative;
+  z-index:2;
+}
 
-    .badge {
-      width: fit-content;
-      margin: 14px auto 0;
-      padding: 7px 13px;
-      border-radius: 30px;
-      background: rgba(255,48,48,.09);
-      border: 1px solid rgba(255,48,48,.35);
-      color: #ff7777;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: .7px;
-    }
+/* =========================
+   HEADER
+========================= */
 
-    .section {
-      margin-top: 24px;
-    }
+.header{
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
 
-    .section-title {
-      font-size: 13px;
-      font-weight: 800;
-      color: #d9d9df;
-      margin-bottom: 10px;
-    }
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
 
-    .task {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 13px;
-      margin-bottom: 10px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.035);
-      border: 1px solid rgba(255,255,255,.07);
-      transition: .2s;
-    }
+.brand-logo{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(145deg,#ff1744,#8b001f);
+  font-weight:1000;
+  box-shadow:0 0 25px rgba(255,23,68,.4);
+}
 
-    .task:hover {
-      border-color: rgba(255,48,48,.45);
-      transform: translateY(-1px);
-    }
+.brand-name{
+  font-weight:900;
+  letter-spacing:1px;
+}
 
-    .task-icon {
-      width: 42px;
-      height: 42px;
-      min-width: 42px;
-      border-radius: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 19px;
-      background: rgba(255,255,255,.06);
-    }
+.brand-name span{
+  color:var(--red);
+}
 
-    .task-info {
-      flex: 1;
-    }
+.status{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:8px 11px;
+  border-radius:20px;
+  border:1px solid rgba(0,230,118,.2);
+  background:rgba(0,230,118,.05);
+  color:#a7ffc9;
+  font-size:10px;
+  font-weight:bold;
+}
 
-    .task-info strong {
-      display: block;
-      font-size: 13px;
-      margin-bottom: 3px;
-    }
+.status-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 12px var(--green);
+  animation:statusPulse 1.5s infinite;
+}
 
-    .task-info span {
-      color: var(--muted);
-      font-size: 11px;
-    }
+@keyframes statusPulse{
+  50%{opacity:.35;transform:scale(.65)}
+}
 
-    .task-btn {
-      border: 0;
-      color: white;
-      background: var(--red);
-      padding: 10px 12px;
-      border-radius: 11px;
-      font-weight: 800;
-      font-size: 11px;
-      cursor: pointer;
-      text-decoration: none;
-      white-space: nowrap;
-    }
+/* =========================
+   PAGES
+========================= */
 
-    .task-btn:hover {
-      background: var(--red2);
-    }
+.page{
+  display:none;
+  animation:pageIn .45s ease;
+}
 
-    .key-box {
-      margin-top: 18px;
-      padding: 16px;
-      border-radius: 18px;
-      background: rgba(0,0,0,.28);
-      border: 1px solid rgba(255,255,255,.08);
-    }
+.page.active{
+  display:block;
+}
 
-    .key-label {
-      color: #9999a3;
-      font-size: 11px;
-      margin-bottom: 8px;
-    }
+@keyframes pageIn{
+  from{
+    opacity:0;
+    transform:translateY(18px) scale(.98);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
 
-    .key-row {
-      display: flex;
-      gap: 8px;
-    }
+/* =========================
+   HERO
+========================= */
 
-    #keyInput {
-      flex: 1;
-      min-width: 0;
-      height: 48px;
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 12px;
-      outline: none;
-      background: #08080b;
-      color: white;
-      padding: 0 13px;
-      font-family: monospace;
-      font-size: 12px;
-    }
+.hero{
+  position:relative;
+  text-align:center;
+  padding:28px 18px 24px;
+  border-radius:28px;
+  border:1px solid var(--line);
+  background:linear-gradient(
+    145deg,
+    rgba(25,15,23,.95),
+    rgba(8,8,13,.92)
+  );
+  box-shadow:
+    0 20px 70px rgba(0,0,0,.45),
+    0 0 50px rgba(255,0,60,.08);
+  overflow:hidden;
+}
 
-    #copyBtn {
-      width: 52px;
-      border: 0;
-      border-radius: 12px;
-      background: #24242c;
-      color: white;
-      cursor: pointer;
-      font-size: 18px;
-    }
+.hero::before{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  background:var(--red);
+  filter:blur(100px);
+  opacity:.12;
+  top:-100px;
+  left:50%;
+  transform:translateX(-50%);
+}
 
-    #copyBtn:hover {
-      background: #33333d;
-    }
+.logo{
+  width:92px;
+  height:92px;
+  margin:auto;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#08080c;
+  border:2px solid var(--red);
+  color:var(--red);
+  font-size:34px;
+  font-weight:1000;
+  box-shadow:
+    0 0 20px rgba(255,23,68,.35),
+    inset 0 0 20px rgba(255,23,68,.08);
+  animation:logoPulse 2.4s infinite;
+}
 
-    .generate {
-      width: 100%;
-      height: 52px;
-      margin-top: 12px;
-      border: 0;
-      border-radius: 15px;
-      cursor: pointer;
-      color: white;
-      font-size: 14px;
-      font-weight: 900;
-      letter-spacing: .3px;
-      background: linear-gradient(135deg, #ff3030, #b90000);
-      box-shadow: 0 10px 28px rgba(255,0,0,.2);
-      transition: .2s;
-    }
+@keyframes logoPulse{
+  0%,100%{
+    transform:scale(1);
+    box-shadow:0 0 20px rgba(255,23,68,.3);
+  }
+  50%{
+    transform:scale(1.05);
+    box-shadow:0 0 45px rgba(255,23,68,.65);
+  }
+}
 
-    .generate:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 35px rgba(255,0,0,.3);
-    }
+.hero h1{
+  margin-top:18px;
+  font-size:30px;
+  font-weight:1000;
+  letter-spacing:2px;
+}
 
-    .generate:active {
-      transform: scale(.98);
-    }
+.hero h1 span{
+  color:var(--red);
+}
 
-    .status {
-      display: none;
-      margin-top: 12px;
-      padding: 11px;
-      border-radius: 12px;
-      text-align: center;
-      font-size: 12px;
-      background: rgba(32,227,154,.08);
-      border: 1px solid rgba(32,227,154,.25);
-      color: #69edbc;
-    }
+.hero p{
+  margin-top:8px;
+  color:var(--gray);
+  font-size:12px;
+}
 
-    .timer {
-      text-align: center;
-      margin-top: 14px;
-      color: #888891;
-      font-size: 11px;
-    }
+.lock{
+  width:82px;
+  height:30px;
+  margin:18px auto 0;
+  border-radius:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  background:rgba(255,23,68,.08);
+  border:1px solid rgba(255,23,68,.3);
+  color:#ff809b;
+  font-size:10px;
+  font-weight:bold;
+}
 
-    .timer strong {
-      color: #fff;
-    }
+/* =========================
+   CARDS
+========================= */
 
-    .features {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 20px;
-    }
+.card{
+  margin-top:14px;
+  padding:18px;
+  border-radius:20px;
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.07);
+  box-shadow:0 15px 45px rgba(0,0,0,.25);
+}
 
-    .feature {
-      text-align: center;
-      padding: 12px 5px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.035);
-      border: 1px solid rgba(255,255,255,.06);
-    }
+.card-title{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:14px;
+  font-weight:bold;
+  margin-bottom:14px;
+}
 
-    .feature b {
-      display: block;
-      font-size: 17px;
-      margin-bottom: 4px;
-    }
+.card-title-icon{
+  width:30px;
+  height:30px;
+  border-radius:9px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,23,68,.1);
+  color:var(--red);
+}
 
-    .feature span {
-      font-size: 9px;
-      color: #8d8d96;
-    }
+/* =========================
+   STATS
+========================= */
 
-    footer {
-      text-align: center;
-      margin: 18px 0 5px;
-      color: #666670;
-      font-size: 10px;
-    }
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
 
-    footer span {
-      color: #ff5555;
-    }
+.stat{
+  text-align:center;
+  padding:13px 5px;
+  border-radius:13px;
+  background:#09090d;
+  border:1px solid rgba(255,255,255,.05);
+}
 
-    @media (max-width: 380px) {
-      body {
-        padding: 10px;
-      }
+.stat-number{
+  font-size:17px;
+  font-weight:900;
+}
 
-      .card {
-        padding: 23px 14px;
-      }
+.stat-label{
+  margin-top:4px;
+  color:#777;
+  font-size:8px;
+  text-transform:uppercase;
+}
 
-      h1 {
-        font-size: 27px;
-      }
+/* =========================
+   BUTTONS
+========================= */
 
-      .task-btn {
-        padding: 9px 8px;
-      }
-    }
-  </style>
+.main-btn{
+  width:100%;
+  min-height:55px;
+  border:0;
+  border-radius:15px;
+  margin-top:11px;
+  color:white;
+  font-weight:900;
+  cursor:pointer;
+  transition:.22s ease;
+  position:relative;
+  overflow:hidden;
+}
+
+.main-btn::after{
+  content:"";
+  position:absolute;
+  width:60px;
+  height:100%;
+  top:0;
+  left:-100px;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.25),
+    transparent
+  );
+  transform:skewX(-20deg);
+  animation:shine 3.5s infinite;
+}
+
+@keyframes shine{
+  0%{left:-100px}
+  25%,100%{left:130%}
+}
+
+.main-btn:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.1);
+}
+
+.main-btn:active{
+  transform:scale(.98);
+}
+
+.generate{
+  background:linear-gradient(135deg,#ff1744,#a50025);
+  box-shadow:0 10px 30px rgba(255,0,60,.2);
+}
+
+.whatsapp{
+  background:linear-gradient(135deg,#11c96a,#07833f);
+}
+
+.youtube{
+  background:linear-gradient(135deg,#ff3030,#a90000);
+}
+
+.back{
+  background:#141419;
+  border:1px solid #292932;
+}
+
+/* =========================
+   KEY PAGE
+========================= */
+
+.key-hero{
+  text-align:center;
+  padding:25px 18px;
+  border-radius:25px;
+  background:linear-gradient(145deg,#151017,#09090d);
+  border:1px solid var(--line);
+}
+
+.key-icon{
+  width:70px;
+  height:70px;
+  margin:auto;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  background:rgba(255,23,68,.08);
+  border:1px solid rgba(255,23,68,.3);
+  animation:keyFloat 2.5s ease-in-out infinite;
+}
+
+@keyframes keyFloat{
+  50%{transform:translateY(-7px) rotate(2deg)}
+}
+
+.key-hero h2{
+  margin-top:14px;
+  font-size:23px;
+}
+
+.key-hero p{
+  color:#85858e;
+  font-size:11px;
+  margin-top:7px;
+}
+
+.input{
+  width:100%;
+  height:54px;
+  margin-top:10px;
+  border-radius:13px;
+  border:1px solid #292932;
+  outline:none;
+  background:#08080c;
+  color:white;
+  padding:0 15px;
+  font-size:13px;
+}
+
+.input:focus{
+  border-color:var(--red);
+  box-shadow:0 0 20px rgba(255,23,68,.1);
+}
+
+.result{
+  display:none;
+  margin-top:13px;
+  padding:14px;
+  border-radius:15px;
+  background:rgba(0,230,118,.045);
+  border:1px solid rgba(0,230,118,.3);
+}
+
+.result.show{
+  display:block;
+  animation:pageIn .35s ease;
+}
+
+.success{
+  color:#5dff9e;
+  font-size:11px;
+  font-weight:bold;
+  margin-bottom:9px;
+}
+
+.key-row{
+  display:flex;
+  gap:7px;
+}
+
+.key-value{
+  flex:1;
+  min-width:0;
+  padding:13px 10px;
+  border-radius:10px;
+  background:#050507;
+  border:1px solid #25252b;
+  color:white;
+  font-family:monospace;
+  font-size:11px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.copy{
+  width:80px;
+  border:1px solid #33333a;
+  border-radius:10px;
+  background:#17171d;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.copy:hover{
+  border-color:var(--red);
+}
+
+/* =========================
+   ERROR
+========================= */
+
+.error{
+  display:none;
+  margin-top:11px;
+  padding:12px;
+  border-radius:11px;
+  background:rgba(255,23,68,.08);
+  border:1px solid rgba(255,23,68,.25);
+  color:#ff8298;
+  font-size:11px;
+  line-height:1.4;
+}
+
+.error.show{
+  display:block;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.spinner{
+  width:16px;
+  height:16px;
+  display:inline-block;
+  vertical-align:middle;
+  margin-right:7px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.25);
+  border-top-color:white;
+  animation:spin .7s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+/* =========================
+   INFO
+========================= */
+
+.info-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.info-row:last-child{
+  border-bottom:0;
+}
+
+.info-icon{
+  width:35px;
+  height:35px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#0c0c11;
+  font-size:15px;
+}
+
+.info-text{
+  flex:1;
+}
+
+.info-text strong{
+  display:block;
+  font-size:11px;
+}
+
+.info-text span{
+  display:block;
+  color:#6e6e78;
+  font-size:9px;
+  margin-top:3px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+  text-align:center;
+  padding:20px 0 8px;
+  color:#55555e;
+  font-size:9px;
+}
+
+footer strong{
+  color:#85858d;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:380px){
+  .app{
+    padding:12px;
+  }
+
+  .hero{
+    padding:22px 14px;
+  }
+
+  .hero h1{
+    font-size:26px;
+  }
+
+  .logo{
+    width:80px;
+    height:80px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <main class="container">
+<div class="background">
+  <div class="grid"></div>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+  <div id="particles"></div>
+</div>
 
-    <div class="topbar">
-      <div class="brand-small">
-        <span>🔴</span>
-        KYAMI MODZ
-      </div>
+<div class="app">
 
-      <div class="online">
-        <span class="dot"></span>
-        ONLINE
+  <!-- HEADER -->
+
+  <header class="header">
+
+    <div class="brand">
+      <div class="brand-logo">K</div>
+
+      <div class="brand-name">
+        KYAMI <span>MODZ</span>
       </div>
     </div>
 
-    <section class="card">
+    <div class="status">
+      <span class="status-dot"></span>
+      ONLINE
+    </div>
 
-      <div class="logo">KM</div>
+  </header>
 
-      <h1>KYAMI MODZ</h1>
 
-      <p class="subtitle">
-        Sistema oficial de acceso
+  <!-- =========================
+       PÁGINA 1
+       BLOQUEADO
+  ========================== -->
+
+  <section id="blockedPage" class="page active">
+
+    <div class="hero">
+
+      <div class="logo">
+        K
+      </div>
+
+      <h1>
+        KYAMI <span>MODZ</span>
+      </h1>
+
+      <p>
+        Sistema de acceso para scripts Lua
       </p>
 
-      <div class="badge">
-        ⚡ KEY SYSTEM • V1.0
+      <div class="lock">
+        🔒 BLOQUEADO
       </div>
 
-      <div class="section">
+    </div>
 
-        <div class="section-title">
-          🚀 Completa los pasos
+
+    <div class="card">
+
+      <div class="card-title">
+        <div class="card-title-icon">⚡</div>
+        Estado del sistema
+      </div>
+
+      <div class="stats">
+
+        <div class="stat">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Servidor</div>
         </div>
 
-        <div class="task">
-          <div class="task-icon">💬</div>
-
-          <div class="task-info">
-            <strong>Únete al canal de WhatsApp</strong>
-            <span>Apoya el canal de KYAMI MODZ</span>
-          </div>
-
-          <a
-            class="task-btn"
-            href="https://whatsapp.com/channel/0029Vb7HbHUJ93wRQ6TZSE0g"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            UNIRME
-          </a>
+        <div class="stat">
+          <div class="stat-number">8H</div>
+          <div class="stat-label">Duración</div>
         </div>
 
-        <div class="task">
-          <div class="task-icon">▶️</div>
-
-          <div class="task-info">
-            <strong>Visita mi canal de YouTube</strong>
-            <span>Apoya el contenido de KYAMI MODZ</span>
-          </div>
-
-          <a
-            class="task-btn"
-            href="https://youtube.com/@kyami-modz90?si=XotEIvlfTQvGOSz1"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            YOUTUBE
-          </a>
+        <div class="stat">
+          <div class="stat-number">✓</div>
+          <div class="stat-label">Seguro</div>
         </div>
 
       </div>
 
-      <div class="key-box">
+    </div>
 
-        <div class="key-label">
-          🔑 TU KEY
+
+    <div class="card">
+
+      <div class="card-title">
+        <div class="card-title-icon">🔐</div>
+        Acceso requerido
+      </div>
+
+      <div class="info-row">
+
+        <div class="info-icon">🔑</div>
+
+        <div class="info-text">
+          <strong>Necesitas una Key</strong>
+          <span>Genera una key para continuar.</span>
+        </div>
+
+      </div>
+
+      <div class="info-row">
+
+        <div class="info-icon">⏱️</div>
+
+        <div class="info-text">
+          <strong>Tiempo limitado</strong>
+          <span>La duración depende del servidor.</span>
+        </div>
+
+      </div>
+
+      <button
+        class="main-btn generate"
+        onclick="showPage('keyPage')"
+      >
+        🔑 GENERAR MI KEY
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        <div class="card-title-icon">❤️</div>
+        Apoya a KYAMI MODZ
+      </div>
+
+      <a
+        class="main-btn whatsapp"
+        href="https://whatsapp.com/channel/0029Vb7HbHUJ93wRQ6TZSE0g"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="display:flex;align-items:center;justify-content:center;text-decoration:none;"
+      >
+        🟢 UNIRME AL CANAL DE WHATSAPP
+      </a>
+
+      <a
+        class="main-btn youtube"
+        href="https://youtube.com/@kyami-modz90?si=XotEIvlfTQvGOSz1"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="display:flex;align-items:center;justify-content:center;text-decoration:none;"
+      >
+        ▶️ VISITAR YOUTUBE
+      </a>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        <div class="card-title-icon">ℹ️</div>
+        ¿Cómo funciona?
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">1️⃣</div>
+        <div class="info-text">
+          <strong>Genera tu Key</strong>
+          <span>Entra al generador y completa el acceso.</span>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">2️⃣</div>
+        <div class="info-text">
+          <strong>Copia la Key</strong>
+          <span>Usa el botón COPIAR.</span>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">3️⃣</div>
+        <div class="info-text">
+          <strong>Continúa en tu script</strong>
+          <span>Introduce la Key donde corresponda.</span>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       PÁGINA 2
+       GENERAR KEY
+  ========================== -->
+
+  <section id="keyPage" class="page">
+
+    <div class="key-hero">
+
+      <div class="key-icon">
+        🔑
+      </div>
+
+      <h2>
+        Generar Key
+      </h2>
+
+      <p>
+        Crea tu clave de acceso de forma segura.
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-title">
+        <div class="card-title-icon">🔐</div>
+        Autenticación
+      </div>
+
+      <div class="info-row">
+
+        <div class="info-icon">🛡️</div>
+
+        <div class="info-text">
+          <strong>Acceso protegido</strong>
+          <span>La contraseña se procesa mediante el servidor.</span>
+        </div>
+
+      </div>
+
+      <input
+        id="password"
+        class="input"
+        type="password"
+        autocomplete="off"
+        placeholder="Contraseña de administrador"
+      >
+
+      <button
+        id="generateBtn"
+        class="main-btn generate"
+        onclick="generateKey()"
+      >
+        ⚡ GENERAR KEY
+      </button>
+
+      <button
+        class="main-btn back"
+        onclick="showPage('blockedPage')"
+      >
+        ← VOLVER
+      </button>
+
+
+      <div id="error" class="error"></div>
+
+
+      <div id="result" class="result">
+
+        <div class="success">
+          ✓ KEY GENERADA CORRECTAMENTE
         </div>
 
         <div class="key-row">
-          <input
-            id="keyInput"
-            type="text"
-            value="Pulsa GENERAR KEY"
-            readonly
+
+          <div
+            id="keyValue"
+            class="key-value"
           >
+            —
+          </div>
 
-          <button id="copyBtn" type="button" onclick="copyKey()">
-            📋
+          <button
+            id="copyBtn"
+            class="copy"
+            onclick="copyKey()"
+          >
+            COPIAR
           </button>
-        </div>
 
-        <button
-          class="generate"
-          type="button"
-          onclick="generateKey()"
-        >
-          ⚡ GENERAR KEY
-        </button>
-
-        <div id="status" class="status">
-          ✅ Key copiada correctamente
-        </div>
-
-        <div class="timer">
-          Duración de la key:
-          <strong>8 horas</strong>
         </div>
 
       </div>
 
-      <div class="features">
+    </div>
 
-        <div class="feature">
-          <b>🔐</b>
-          <span>ACCESO SEGURO</span>
-        </div>
 
-        <div class="feature">
-          <b>⚡</b>
-          <span>RÁPIDO</span>
-        </div>
+    <div class="card">
 
-        <div class="feature">
-          <b>🛡️</b>
-          <span>PROTEGIDO</span>
-        </div>
-
+      <div class="card-title">
+        <div class="card-title-icon">💡</div>
+        Información
       </div>
 
-    </section>
+      <div class="notice" style="color:#777;line-height:1.6;font-size:11px;">
+        🔒 No compartas tu Key con otras personas.<br><br>
+        ⏱️ La Key puede tener una duración limitada.<br><br>
+        🛡️ Nunca publiques tu contraseña de administrador.<br><br>
+        ⚙️ La generación depende de la configuración del servidor.
+      </div>
 
-    <footer>
-      © 2026 <span>KYAMI MODZ</span> · Todos los derechos reservados
-    </footer>
+    </div>
 
-  </main>
+  </section>
 
-  <script>
-    function createKey() {
-      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-      let part1 = "";
-      let part2 = "";
 
-      for (let i = 0; i < 8; i++) {
-        part1 += chars.charAt(
-          Math.floor(Math.random() * chars.length)
-        );
-      }
+  <footer>
+    <strong>KYAMI MODZ</strong> · LUA KEY SYSTEM<br>
+    Sistema de acceso © 2026
+  </footer>
 
-      for (let i = 0; i < 8; i++) {
-        part2 += chars.charAt(
-          Math.floor(Math.random() * chars.length)
-        );
-      }
+</div>
 
-      return "KYAMI-" + part1 + "-" + part2;
+
+<script>
+
+/* =====================================
+   CAMBIO ENTRE PÁGINAS
+===================================== */
+
+function showPage(pageId){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(page => {
+      page.classList.remove("active");
+    });
+
+  const page =
+    document.getElementById(pageId);
+
+  if(page){
+    page.classList.add("active");
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+  }
+}
+
+
+/* =====================================
+   PARTICULAS
+===================================== */
+
+const particleContainer =
+  document.getElementById("particles");
+
+for(let i = 0; i < 35; i++){
+
+  const particle =
+    document.createElement("span");
+
+  particle.style.position = "absolute";
+  particle.style.width =
+    Math.random() * 3 + 1 + "px";
+
+  particle.style.height =
+    particle.style.width;
+
+  particle.style.borderRadius = "50%";
+
+  particle.style.background =
+    "rgba(255,23,68," +
+    (Math.random() * .5 + .15) +
+    ")";
+
+  particle.style.left =
+    Math.random() * 100 + "%";
+
+  particle.style.top =
+    Math.random() * 100 + "%";
+
+  particle.style.boxShadow =
+    "0 0 8px rgba(255,23,68,.6)";
+
+  particle.style.animation =
+    "particleFloat " +
+    (Math.random() * 8 + 5) +
+    "s linear infinite";
+
+  particleContainer.appendChild(particle);
+}
+
+
+const particleStyle =
+document.createElement("style");
+
+particleStyle.textContent = `
+@keyframes particleFloat{
+  0%{
+    transform:translateY(0) translateX(0);
+    opacity:0;
+  }
+  15%{
+    opacity:1;
+  }
+  50%{
+    transform:translateY(-80px) translateX(25px);
+  }
+  100%{
+    transform:translateY(-170px) translateX(-20px);
+    opacity:0;
+  }
+}
+`;
+
+document.head.appendChild(particleStyle);
+
+
+/* =====================================
+   GENERAR KEY
+===================================== */
+
+const GENERATE_ENDPOINT =
+  "/api/generate";
+
+
+function showError(message){
+
+  const error =
+    document.getElementById("error");
+
+  error.textContent =
+    "⚠️ " + message;
+
+  error.classList.add("show");
+}
+
+
+function hideError(){
+
+  const error =
+    document.getElementById("error");
+
+  error.textContent = "";
+
+  error.classList.remove("show");
+}
+
+
+async function generateKey(){
+
+  const password =
+    document
+      .getElementById("password")
+      .value
+      .trim();
+
+  const button =
+    document
+      .getElementById("generateBtn");
+
+  const result =
+    document
+      .getElementById("result");
+
+  const keyValue =
+    document
+      .getElementById("keyValue");
+
+
+  hideError();
+
+  result.classList.remove("show");
+
+
+  if(!password){
+
+    showError(
+      "Introduce la contraseña de administrador."
+    );
+
+    return;
+  }
+
+
+  button.disabled = true;
+
+  button.innerHTML =
+    '<span class="spinner"></span>GENERANDO...';
+
+
+  try{
+
+    const response =
+      await fetch(
+        GENERATE_ENDPOINT,
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:JSON.stringify({
+            password:password
+          })
+        }
+      );
+
+
+    let data = {};
+
+    try{
+      data = await response.json();
+    }catch(e){
+      data = {};
     }
 
-    function generateKey() {
-      const input = document.getElementById("keyInput");
-      const status = document.getElementById("status");
 
-      input.value = createKey();
+    if(!response.ok){
 
-      status.style.display = "block";
-      status.textContent = "✅ Key generada correctamente";
-
-      setTimeout(() => {
-        status.style.display = "none";
-      }, 2500);
-    }
-
-    async function copyKey() {
-      const input = document.getElementById("keyInput");
-      const status = document.getElementById("status");
-
-      if (
-        !input.value ||
-        input.value === "Pulsa GENERAR KEY"
-      ) {
-        status.style.display = "block";
-        status.textContent = "⚠️ Primero genera una key";
-        return;
-      }
-
-      try {
-        await navigator.clipboard.writeText(input.value);
-
-        status.style.display = "block";
-        status.textContent = "✅ Key copiada al portapapeles";
-
-      } catch (error) {
-        input.select();
-        document.execCommand("copy");
-
-        status.style.display = "block";
-        status.textContent = "✅ Key copiada";
-      }
-
-      setTimeout(() => {
-        status.style.display = "none";
-      }, 2500);
-    }
-  </script>
-
-</body>
-</html>
+ 
