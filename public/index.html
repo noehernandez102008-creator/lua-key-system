@@ -1,495 +1,955 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080808">
-  <title>KYAMI MODZ | Key System</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#050505">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<title>KYAMI MODZ • KEY SYSTEM</title>
 
-    body {
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      background:
-        radial-gradient(circle at top, #5d0000 0%, #190000 35%, #050505 75%);
-      padding: 20px;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    .container {
-      width: 100%;
-      max-width: 480px;
-      margin: auto;
-    }
+body{
+  min-height:100vh;
+  font-family:Arial,Helvetica,sans-serif;
+  color:white;
+  background:
+    radial-gradient(circle at 50% -10%,#730909 0%,transparent 38%),
+    radial-gradient(circle at 0% 100%,#300000 0%,transparent 30%),
+    #040404;
+  padding:22px 14px;
+}
 
-    .card {
-      background: rgba(12, 12, 16, .96);
-      border: 1px solid #ff3030;
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: 0 0 40px rgba(255, 0, 0, .20);
-      animation: appear .7s ease;
-    }
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:35px 35px;
+}
 
-    @keyframes appear {
-      from {
-        opacity: 0;
-        transform: translateY(25px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+.container{
+  position:relative;
+  z-index:2;
+  max-width:540px;
+  margin:auto;
+}
 
-    .logo {
-      width: 82px;
-      height: 82px;
-      margin: 0 auto 15px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #080808;
-      border: 2px solid #ff3030;
-      box-shadow: 0 0 25px rgba(255, 0, 0, .45);
-      font-size: 27px;
-      font-weight: 900;
-      color: #ff3030;
-      animation: pulse 2s infinite;
-    }
+.header{
+  text-align:center;
+  margin:12px 0 24px;
+}
 
-    @keyframes pulse {
-      0%, 100% {
-        box-shadow: 0 0 15px rgba(255,0,0,.25);
-      }
-      50% {
-        box-shadow: 0 0 35px rgba(255,0,0,.65);
-      }
-    }
+.logo{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:82px;
+  height:82px;
+  border-radius:50%;
+  background:#090909;
+  border:2px solid #ff2424;
+  box-shadow:0 0 35px rgba(255,0,0,.45);
+  font-size:30px;
+  font-weight:1000;
+  color:#ff3030;
+  animation:pulse 2s infinite;
+}
 
-    h1 {
-      text-align: center;
-      font-size: 27px;
-      margin-bottom: 7px;
-    }
+@keyframes pulse{
+  50%{
+    box-shadow:0 0 50px rgba(255,0,0,.7);
+  }
+}
 
-    .subtitle {
-      text-align: center;
-      color: #999;
-      font-size: 13px;
-      margin-bottom: 22px;
-    }
+h1{
+  margin-top:14px;
+  font-size:30px;
+  letter-spacing:1px;
+}
 
-    .status-box {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 13px;
-      margin-bottom: 10px;
-      border-radius: 14px;
-      background: #111116;
-      border: 1px solid #29292f;
-    }
+.red{
+  color:#ff3030;
+}
 
-    .status-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+.subtitle{
+  color:#8e8e96;
+  font-size:12px;
+  margin-top:6px;
+}
 
-    .dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: #777;
-    }
+.card{
+  background:rgba(12,12,16,.96);
+  border:1px solid #28282f;
+  border-radius:22px;
+  padding:20px;
+  margin-bottom:15px;
+  box-shadow:0 15px 45px rgba(0,0,0,.4);
+}
 
-    .dot.ok {
-      background: #18e67b;
-      box-shadow: 0 0 12px #18e67b;
-    }
+.title{
+  font-size:18px;
+  font-weight:900;
+  margin-bottom:5px;
+}
 
-    .state {
-      font-size: 12px;
-      font-weight: bold;
-      color: #999;
-    }
+.desc{
+  color:#8f8f98;
+  font-size:12px;
+  line-height:1.5;
+  margin-bottom:18px;
+}
 
-    .state.ok {
-      color: #18e67b;
-    }
+.status{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#111116;
+  border:1px solid #27272d;
+  border-radius:13px;
+  padding:13px;
+  margin-top:9px;
+}
 
-    .step {
-      margin-top: 16px;
-      padding: 17px;
-      border-radius: 17px;
-      background: linear-gradient(145deg, #15151a, #0c0c10);
-      border: 1px solid #29292f;
-    }
+.status-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:13px;
+  font-weight:800;
+}
 
-    .step h2 {
-      font-size: 16px;
-      margin-bottom: 7px;
-    }
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#777;
+}
 
-    .step p {
-      color: #999;
-      font-size: 12px;
-      line-height: 1.5;
-      margin-bottom: 13px;
-    }
+.dot.green{
+  background:#20ed87;
+  box-shadow:0 0 13px #20ed87;
+}
 
-    button,
-    .link-button {
-      width: 100%;
-      border: 0;
-      border-radius: 12px;
-      padding: 13px;
-      color: white;
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-      text-decoration: none;
-      display: block;
-      text-align: center;
-      transition: .2s;
-    }
+.state{
+  font-size:10px;
+  color:#ff5555;
+  font-weight:900;
+}
 
-    .whatsapp {
-      background: #168c4b;
-    }
+.state.green{
+  color:#20ed87;
+}
 
-    .youtube {
-      background: #d71919;
-    }
+.step{
+  background:#101015;
+  border:1px solid #292930;
+  border-radius:16px;
+  padding:16px;
+  margin-top:13px;
+}
 
-    button:hover,
-    .link-button:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.12);
-    }
+.step h2{
+  font-size:15px;
+  margin-bottom:6px;
+}
 
-    .confirm {
-      margin-top: 9px;
-      background: #29292f;
-    }
+.step p{
+  color:#8d8d95;
+  font-size:11px;
+  line-height:1.5;
+  margin-bottom:12px;
+}
 
-    .confirm.done {
-      background: #126c42;
-    }
+.btn{
+  width:100%;
+  border:0;
+  border-radius:11px;
+  padding:13px;
+  color:white;
+  font-weight:900;
+  cursor:pointer;
+  transition:.2s;
+  text-decoration:none;
+  display:block;
+  text-align:center;
+}
 
-    .generate {
-      margin-top: 20px;
-      background: linear-gradient(90deg, #ff1e1e, #a90000);
-      box-shadow: 0 0 25px rgba(255,0,0,.25);
-    }
+.btn:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.1);
+}
 
-    .generate:disabled {
-      cursor: not-allowed;
-      opacity: .35;
-      filter: grayscale(1);
-      transform: none;
-      box-shadow: none;
-    }
+.whatsapp{
+  background:#168b4c;
+}
 
-    .message {
-      display: none;
-      margin-top: 15px;
-      padding: 13px;
-      border-radius: 12px;
-      text-align: center;
-      font-size: 13px;
-      line-height: 1.5;
-    }
+.youtube{
+  background:#e21b23;
+}
 
-    .message.show {
-      display: block;
-    }
+.check{
+  margin-top:10px;
+  background:#292930;
+}
 
-    .message.error {
-      background: rgba(255, 0, 0, .12);
-      border: 1px solid #8d2222;
-      color: #ff7373;
-    }
+.check.loading{
+  opacity:.6;
+}
 
-    .message.success {
-      background: rgba(0, 255, 120, .10);
-      border: 1px solid #17633d;
-      color: #5cffaa;
-    }
+.generate{
+  margin-top:17px;
+  background:linear-gradient(135deg,#ff3333,#a40000);
+  font-size:14px;
+  box-shadow:0 10px 30px rgba(255,0,0,.2);
+}
 
-    .key-box {
-      display: none;
-      margin-top: 18px;
-      padding: 18px;
-      border-radius: 16px;
-      text-align: center;
-      background: #080808;
-      border: 1px solid #ff3030;
-      animation: appear .4s ease;
-    }
+.generate:disabled{
+  opacity:.35;
+  filter:grayscale(1);
+  cursor:not-allowed;
+  transform:none;
+  box-shadow:none;
+}
 
-    .key-box.show {
-      display: block;
-    }
+.message{
+  display:none;
+  margin-top:13px;
+  padding:13px;
+  border-radius:12px;
+  text-align:center;
+  font-size:12px;
+  line-height:1.4;
+}
 
-    .key-label {
-      color: #999;
-      font-size: 11px;
-      margin-bottom: 8px;
-    }
+.message.show{
+  display:block;
+}
 
-    #key {
-      font-size: 20px;
-      font-weight: 900;
-      color: #ff4242;
-      word-break: break-all;
-      letter-spacing: 1px;
-    }
+.message.error{
+  color:#ff7070;
+  background:rgba(255,0,0,.1);
+  border:1px solid #652323;
+}
 
-    .copy {
-      margin-top: 12px;
-      background: #24242a;
-    }
+.message.success{
+  color:#52ffa8;
+  background:rgba(0,255,120,.08);
+  border:1px solid #18583a;
+}
 
-    .footer {
-      text-align: center;
-      color: #666;
-      font-size: 11px;
-      margin-top: 18px;
-    }
-  </style>
+.key-box{
+  display:none;
+  margin-top:15px;
+  background:#080808;
+  border:1px solid #ff3030;
+  border-radius:15px;
+  padding:16px;
+  text-align:center;
+}
+
+.key-box.show{
+  display:block;
+  animation:appear .4s ease;
+}
+
+@keyframes appear{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.key-label{
+  color:#888;
+  font-size:10px;
+  margin-bottom:8px;
+}
+
+.key{
+  color:#ff4242;
+  font-family:monospace;
+  font-size:18px;
+  font-weight:900;
+  word-break:break-all;
+}
+
+.copy{
+  margin-top:12px;
+  background:#292930;
+}
+
+.footer{
+  text-align:center;
+  color:#555;
+  font-size:10px;
+  padding:5px 0 20px;
+}
+
+@media(max-width:400px){
+  .card{
+    padding:16px;
+  }
+
+  h1{
+    font-size:26px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
-    <div class="card">
+<div class="container">
 
-      <div class="logo">K</div>
+  <div class="header">
+    <div class="logo">K</div>
 
-      <h1>KYAMI MODZ</h1>
-      <div class="subtitle">KEY SYSTEM • 8 HORAS</div>
+    <h1>
+      KYAMI<span class="red">MODZ</span>
+    </h1>
 
-      <!-- ESTADOS -->
-      <div class="status-box">
-        <div class="status-left">
-          <div id="waDot" class="dot"></div>
-          <span>WhatsApp</span>
-        </div>
-        <span id="waState" class="state">NO COMPLETADO</span>
-      </div>
-
-      <div class="status-box">
-        <div class="status-left">
-          <div id="ytDot" class="dot"></div>
-          <span>YouTube</span>
-        </div>
-        <span id="ytState" class="state">NO COMPLETADO</span>
-      </div>
-
-      <!-- PASO 1 -->
-      <div class="step">
-        <h2>🟢 Paso 1 — WhatsApp</h2>
-        <p>
-          Abre el canal y después pulsa el botón de confirmación.
-        </p>
-
-        <a
-          class="link-button whatsapp"
-          href="https://whatsapp.com/"
-          target="_blank"
-          rel="noopener"
-        >
-          ABRIR CANAL
-        </a>
-
-        <button id="waConfirm" class="confirm" onclick="completeWhatsApp()">
-          ✓ Ya lo hice
-        </button>
-      </div>
-
-      <!-- PASO 2 -->
-      <div class="step">
-        <h2>🔴 Paso 2 — YouTube</h2>
-        <p>
-          Abre el canal/video y después pulsa el botón de confirmación.
-        </p>
-
-        <a
-          class="link-button youtube"
-          href="https://youtube.com/"
-          target="_blank"
-          rel="noopener"
-        >
-          ABRIR YOUTUBE
-        </a>
-
-        <button id="ytConfirm" class="confirm" onclick="completeYouTube()">
-          ✓ Ya lo hice
-        </button>
-      </div>
-
-      <!-- GENERAR -->
-      <button
-        id="generateButton"
-        class="generate"
-        disabled
-        onclick="generarKey()"
-      >
-        🔒 GENERAR KEY
-      </button>
-
-      <div id="message" class="message"></div>
-
-      <div id="keyBox" class="key-box">
-        <div class="key-label">TU KEY</div>
-        <div id="key">---</div>
-
-        <button class="copy" onclick="copiarKey()">
-          📋 COPIAR KEY
-        </button>
-      </div>
-
-      <div class="footer">
-        La key tiene una duración de 8 horas desde su primer uso.
-      </div>
-
+    <div class="subtitle">
+      🔐 KEY SYSTEM • GENERADOR OFICIAL
     </div>
   </div>
 
-  <script>
-    let whatsappJoined = false;
-    let youtubeLiked = false;
+  <div class="card">
 
-    function updateButton() {
-      const button = document.getElementById("generateButton");
+    <div class="title">
+      🔒 Verificación
+    </div>
 
-      if (whatsappJoined && youtubeLiked) {
-        button.disabled = false;
-        button.innerHTML = "🔑 GENERAR KEY";
-      } else {
-        button.disabled = true;
-        button.innerHTML = "🔒 COMPLETA LOS 2 PASOS";
-      }
-    }
+    <div class="desc">
+      Completa los dos pasos y después pulsa
+      <b>Comprobar</b>. El servidor decidirá si la generación
+      está desbloqueada.
+    </div>
 
-    function completeWhatsApp() {
-      whatsappJoined = true;
+    <!-- ESTADO WHATSAPP -->
 
-      document.getElementById("waDot").classList.add("ok");
-      document.getElementById("waState").textContent = "COMPLETADO";
-      document.getElementById("waState").classList.add("ok");
+    <div class="status">
+      <div class="status-left">
+        <div id="waDot" class="dot"></div>
+        📱 WhatsApp
+      </div>
 
-      const button = document.getElementById("waConfirm");
-      button.classList.add("done");
-      button.textContent = "✓ COMPLETADO";
+      <div id="waState" class="state">
+        NO COMPLETADO
+      </div>
+    </div>
 
-      updateButton();
-    }
+    <!-- ESTADO YOUTUBE -->
 
-    function completeYouTube() {
-      youtubeLiked = true;
+    <div class="status">
+      <div class="status-left">
+        <div id="ytDot" class="dot"></div>
+        ▶️ YouTube
+      </div>
 
-      document.getElementById("ytDot").classList.add("ok");
-      document.getElementById("ytState").textContent = "COMPLETADO";
-      document.getElementById("ytState").classList.add("ok");
+      <div id="ytState" class="state">
+        NO COMPLETADO
+      </div>
+    </div>
 
-      const button = document.getElementById("ytConfirm");
-      button.classList.add("done");
-      button.textContent = "✓ COMPLETADO";
+    <!-- WHATSAPP -->
 
-      updateButton();
-    }
+    <div class="step">
 
-    async function generarKey() {
-      if (!whatsappJoined || !youtubeLiked) {
-        mostrarMensaje(
-          "Completa los 2 pasos antes de generar la key.",
-          "error"
-        );
-        return;
-      }
+      <h2>📱 Únete al canal de WhatsApp</h2>
 
-      const button = document.getElementById("generateButton");
+      <p>
+        Abre tu canal de WhatsApp y realiza el paso solicitado.
+        Luego vuelve aquí.
+      </p>
 
-      button.disabled = true;
-      button.textContent = "⏳ GENERANDO...";
+      <a
+        class="btn whatsapp"
+        href="https://whatsapp.com/channel/0029Vb7HbHUJ93wRQ6TZSE0g"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ABRIR MI CANAL DE WHATSAPP
+      </a>
 
-      try {
-        const response = await fetch("/api/public/generate", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            whatsappJoined: true,
-            youtubeLiked: true
-          })
-        });
+      <button
+        id="waButton"
+        class="btn check"
+        onclick="completeWhatsApp()"
+      >
+        ✓ YA LO HICE
+      </button>
 
-        const data = await response.json();
+    </div>
 
-        if (!response.ok || !data.success) {
-          throw new Error(data.error || "No se pudo generar la key.");
+    <!-- YOUTUBE -->
+
+    <div class="step">
+
+      <h2>▶️ Dale Like a mi video</h2>
+
+      <p>
+        Abre mi canal de YouTube, realiza el paso solicitado
+        y vuelve a esta página.
+      </p>
+
+      <a
+        class="btn youtube"
+        href="https://youtube.com/@kyami-modz90?si=XotEIvlfTQvGOSz1"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ABRIR MI YOUTUBE
+      </a>
+
+      <button
+        id="ytButton"
+        class="btn check"
+        onclick="completeYouTube()"
+      >
+        ✓ YA LO HICE
+      </button>
+
+    </div>
+
+    <!-- COMPROBAR -->
+
+    <button
+      id="checkButton"
+      class="btn check"
+      onclick="checkStatus()"
+    >
+      🔎 COMPROBAR
+    </button>
+
+    <div
+      id="message"
+      class="message"
+    ></div>
+
+  </div>
+
+  <!-- GENERADOR -->
+
+  <div class="card">
+
+    <div class="title">
+      🔑 Generar Key
+    </div>
+
+    <div class="desc">
+      El servidor mantiene bloqueada la generación hasta que
+      la sesión tenga los dos pasos registrados.
+    </div>
+
+    <button
+      id="generateButton"
+      class="btn generate"
+      disabled
+      onclick="generateKey()"
+    >
+      🔒 GENERAR KEY BLOQUEADO
+    </button>
+
+    <div
+      id="keyBox"
+      class="key-box"
+    >
+      <div class="key-label">
+        TU KEY
+      </div>
+
+      <div
+        id="key"
+        class="key"
+      ></div>
+
+      <button
+        class="btn copy"
+        onclick="copyKey()"
+      >
+        📋 COPIAR KEY
+      </button>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    KYAMI MODZ • Key System
+  </div>
+
+</div>
+
+<script>
+let sessionId = null;
+
+let whatsapp = false;
+let youtube = false;
+
+// =========================================
+// INICIAR SESIÓN
+// =========================================
+
+async function createSession(){
+
+  try{
+
+    const response =
+      await fetch("/api/session", {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
         }
+      });
 
-        document.getElementById("key").textContent = data.key;
-        document.getElementById("keyBox").classList.add("show");
+    const data =
+      await response.json();
 
-        mostrarMensaje(
-          "✅ Key generada correctamente.",
-          "success"
-        );
-
-        button.textContent = "✓ KEY GENERADA";
-
-      } catch (error) {
-        console.error(error);
-
-        mostrarMensaje(
-          error.message || "Error conectando con el servidor.",
-          "error"
-        );
-
-        button.disabled = false;
-        button.textContent = "🔑 GENERAR KEY";
-      }
+    if(!response.ok || !data.success){
+      throw new Error(
+        data.error || "No se pudo crear la sesión."
+      );
     }
 
-    function copiarKey() {
-      const key = document.getElementById("key").textContent;
+    sessionId = data.sessionId;
 
-      if (!key || key === "---") return;
+  }catch(error){
 
-      navigator.clipboard.writeText(key)
-        .then(() => {
-          mostrarMensaje("📋 Key copiada al portapapeles.", "success");
+    showMessage(
+      error.message,
+      true
+    );
+
+  }
+
+}
+
+// =========================================
+// WHATSAPP
+// =========================================
+
+async function completeWhatsApp(){
+
+  if(!sessionId){
+    showMessage(
+      "La sesión todavía está cargando.",
+      true
+    );
+    return;
+  }
+
+  try{
+
+    const response =
+      await fetch("/api/session/whatsapp",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          sessionId
         })
-        .catch(() => {
-          mostrarMensaje(
-            "No se pudo copiar automáticamente.",
-            "error"
-          );
-        });
+      });
+
+    const data =
+      await response.json();
+
+    if(!response.ok){
+      throw new Error(
+        data.error || "Error."
+      );
     }
 
-    function mostrarMensaje(texto, tipo) {
-      const message = document.getElementById("message");
+    whatsapp = data.whatsapp;
 
-      message.textContent = texto;
-      message.className = "message show " + tipo;
+    updateUI();
+
+    showMessage(
+      "WhatsApp registrado. Ahora completa YouTube.",
+      false
+    );
+
+  }catch(error){
+
+    showMessage(
+      error.message,
+      true
+    );
+
+  }
+}
+
+// =========================================
+// YOUTUBE
+// =========================================
+
+async function completeYouTube(){
+
+  if(!sessionId){
+    showMessage(
+      "La sesión todavía está cargando.",
+      true
+    );
+    return;
+  }
+
+  try{
+
+    const response =
+      await fetch("/api/session/youtube",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          sessionId
+        })
+      });
+
+    const data =
+      await response.json();
+
+    if(!response.ok){
+      throw new Error(
+        data.error || "Error."
+      );
     }
 
-    updateButton();
-  </script>
+    youtube = data.youtube;
+
+    updateUI();
+
+    showMessage(
+      "YouTube registrado. Pulsa COMPROBAR.",
+      false
+    );
+
+  }catch(error){
+
+    showMessage(
+      error.message,
+      true
+    );
+
+  }
+}
+
+// =========================================
+// COMPROBAR
+// =========================================
+
+async function checkStatus(){
+
+  if(!sessionId){
+    showMessage(
+      "La sesión todavía está cargando.",
+      true
+    );
+    return;
+  }
+
+  const button =
+    document.getElementById("checkButton");
+
+  button.disabled = true;
+  button.textContent = "⏳ COMPROBANDO...";
+
+  try{
+
+    const response =
+      await fetch(
+        "/api/session/" +
+        encodeURIComponent(sessionId)
+      );
+
+    const data =
+      await response.json();
+
+    if(!response.ok){
+      throw new Error(
+        data.error || "No se pudo comprobar."
+      );
+    }
+
+    whatsapp = !!data.whatsapp;
+    youtube = !!data.youtube;
+
+    updateUI();
+
+    if(data.ready){
+
+      showMessage(
+        "✅ Los dos pasos están registrados. Ya puedes generar tu Key.",
+        false
+      );
+
+    }else{
+
+      const faltan = [];
+
+      if(!whatsapp)
+        faltan.push("WhatsApp");
+
+      if(!youtube)
+        faltan.push("YouTube");
+
+      showMessage(
+        "❌ Falta: " + faltan.join(" y "),
+        true
+      );
+
+    }
+
+  }catch(error){
+
+    showMessage(
+      error.message,
+      true
+    );
+
+  }finally{
+
+    button.disabled = false;
+    button.textContent = "🔎 COMPROBAR";
+
+  }
+
+}
+
+// =========================================
+// GENERAR KEY
+// =========================================
+
+async function generateKey(){
+
+  if(!whatsapp || !youtube){
+
+    showMessage(
+      "Completa los dos pasos primero.",
+      true
+    );
+
+    return;
+  }
+
+  const button =
+    document.getElementById("generateButton");
+
+  button.disabled = true;
+  button.textContent = "⏳ GENERANDO...";
+
+  try{
+
+    const response =
+      await fetch("/api/key/generate",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          sessionId
+        })
+      });
+
+    const data =
+      await response.json();
+
+    if(!response.ok || !data.success){
+
+      throw new Error(
+        data.error ||
+        "No se pudo generar la Key."
+      );
+
+    }
+
+    document.getElementById("key")
+      .textContent = data.key;
+
+    document.getElementById("keyBox")
+      .classList.add("show");
+
+    button.textContent =
+      "✅ KEY GENERADA";
+
+    showMessage(
+      "🎉 Key generada correctamente.",
+      false
+    );
+
+  }catch(error){
+
+    button.disabled = false;
+    button.textContent =
+      "🔑 GENERAR KEY";
+
+    showMessage(
+      error.message,
+      true
+    );
+
+  }
+
+}
+
+// =========================================
+// COPIAR
+// =========================================
+
+async function copyKey(){
+
+  const key =
+    document.getElementById("key")
+      .textContent;
+
+  if(!key) return;
+
+  try{
+
+    await navigator.clipboard
+      .writeText(key);
+
+    showMessage(
+      "📋 Key copiada correctamente.",
+      false
+    );
+
+  }catch(error){
+
+    showMessage(
+      "No se pudo copiar la Key.",
+      true
+    );
+
+  }
+
+}
+
+// =========================================
+// UI
+// =========================================
+
+function updateUI(){
+
+  const waDot =
+    document.getElementById("waDot");
+
+  const ytDot =
+    document.getElementById("ytDot");
+
+  const waState =
+    document.getElementById("waState");
+
+  const ytState =
+    document.getElementById("ytState");
+
+  const waButton =
+    document.getElementById("waButton");
+
+  const ytButton =
+    document.getElementById("ytButton");
+
+  const generateButton =
+    document.getElementById("generateButton");
+
+  if(whatsapp){
+
+    waDot.classList.add("green");
+    waState.classList.add("green");
+    waState.textContent =
+      "COMPLETADO";
+
+    waButton.textContent =
+      "✓ WHATSAPP LISTO";
+
+  }else{
+
+    waDot.classList.remove("green");
+    waState.classList.remove("green");
+    waState.textContent =
+      "NO COMPLETADO";
+
+    waButton.textContent =
+      "✓ YA LO HICE";
+
+  }
+
+  if(youtube){
+
+    ytDot.classList.add("green");
+    ytState.classList.add("green");
+    ytState.textContent =
+      "COMPLETADO";
+
+    ytButton.textContent =
+      "✓ YOUTUBE LISTO";
+
+  }else{
+
+    ytDot.classList.remove("green");
+    ytState.classList.remove("green");
+    ytState.textContent =
+      "NO COMPLETADO";
+
+    ytButton.textContent =
+      "✓ YA LO HICE";
+
+  }
+
+  if(whatsapp && youtube){
+
+    generateButton.disabled = false;
+
+    generateButton.textContent =
+      "🔑 GENERAR KEY";
+
+  }else{
+
+    generateButton.disabled = true;
+
+    generateButton.textContent =
+      "🔒 GENERAR KEY BLOQUEADO";
+
+  }
+
+}
+
+// =========================================
+// MENSAJES
+// =========================================
+
+function showMessage(text,error){
+
+  const element =
+    document.getElementById("message");
+
+  element.textContent = text;
+
+  element.className =
+    "message show " +
+    (error ? "error" : "success");
+
+}
+
+// =========================================
+// ARRANQUE
+// =========================================
+
+createSession();
+updateUI();
+</script>
 
 </body>
 </html>
